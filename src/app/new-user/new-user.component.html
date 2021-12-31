@@ -1,0 +1,33 @@
+<body bgcolor="#dcdcdc">
+<h1 class="register">REGISTER</h1><br>
+<div>
+  <label class="textfield">First Name</label>
+  <br>
+  <input  [(ngModel)]="signUpFrom.firstname" id="firstname" type="text" size="75"  class="p-component textfield p-inputtext" pInputText placeholder=""><br>
+</div>
+<div class="p-field">
+  <label class="textfield">Last Name</label><br>
+  <input id="lastname"  [(ngModel)]="signUpFrom.lastname" size="75" type="text" class="p-inputtext textfield p-component" pInputText placeholder=""><br>
+</div>
+<div class="p-field" [class.has-error]="emailcontrol.invalid && emailcontrol.touched" [class.has-success]="emailcontrol.valid">
+  <label class="textfield">Email</label><br>
+  <input required id="email" pattern="[a-zA-Z ]*" [(ngModel)]="signUpFrom.email" size="75" type="email" name="email" class="p-inputtext textfield p-component" ngModel #emailcontrol="ngModel" pInputText placeholder="">
+<span *ngIf="emailcontrol.invalid && emailcontrol.touched">Email Is Required</span>
+  <br>
+</div>
+<div class="p-field">
+  <label class="textfield">Password</label><br>
+  <input id="password"   [(ngModel)]="signUpFrom.password" size="75" type="password" class="p-inputtext textfield p-component" pInputText placeholder=""><br>
+</div>
+<button pButton type="button" class="p-inputtext  submitButtonn buttonArea p-button" (click)="onSubmit()">Submit</button>
+</body>
+
+<!--<div class="form-group">-->
+<!--  <label for ="email">Email</label>-->
+<!--  <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" ngModel #emailref="ngModel">-->
+<!--  <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class ="alert alert-danger">-->
+<!--    <div [hidden]="!emailref.errors?.pattern">-->
+<!--      Invalid pattern-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
