@@ -1,11 +1,24 @@
 <div class="p-grid p-fluid">
   <div class="p-col-12 line"></div>
   <div class="p-col-12 p-md-2 p-m-0 p-p-0" style="background: #000;color:white; height:116px">
-    SPORT
+  <p-avatar
+    image="../../assets/logo/Slogo.png"
+    styleClass="p-mr-2">
+  </p-avatar>
   </div>
   <div class="p-col-12 p-md-10 p-m-0 p-p-0">
     <div class="p-md-12 p-m-0 p-p-0" style="background: #333333;color:white; height:60px">
-      SPORT
+      <div class="p-col-12 p-md-4" style="float: right">
+        <div class="card">
+          <span class="header-text">Welcome</span>
+          <p-avatar
+            label="U"
+            styleClass="p-mr-2"
+            [style]="{'background-color': '#ffffff'}"
+            shape="circle">
+          </p-avatar>
+        </div>
+      </div>
     </div>
     <div class="p-md-12 p-m-0 p-p-0" style="height:60px">
       <p-menubar [model]="items" >
@@ -14,7 +27,6 @@
   </div>
 
 </div>
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 
 <!-- The social media icon bar -->
 <div class="icon-bar">

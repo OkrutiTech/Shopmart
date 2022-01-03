@@ -1,1 +1,50 @@
-<p>product-list works!</p>
+<div *ngIf="!loadProducts">
+  <p-breadcrumb [model]="path"></p-breadcrumb>
+
+</div>
+<div *ngIf="loadProducts">
+ Loading Products
+</div>
+<h1 class="currentCategory">{{currentCategoryName}}</h1>
+
+<div class="p-grid" *ngIf="!loadProducts">
+  <div class="p-col-3">
+    <p-panelMenu [model]="filters" [style]="{'width':'300px'}"></p-panelMenu>
+  </div>
+  <div class="p-col-9">
+    <div class="p-grid p-m-1 p-p-1" >
+      <div class="p-col-4" *ngFor="let product of categoryProducts">
+        <p-card [style]="{padding:0}" styleClass="p-card-shadow">
+          <ng-template pTemplate="header" >
+            <img alt="Card"  height="214" width="234"  style="margin-left: 30px" src="http://localhost/cart-backend/pub/media/catalog/product{{product.image}}">
+          </ng-template>
+
+          <ng-template pTemplate="subheader">
+          <h3 style="margin: 0px 10px">{{product.name}}</h3>
+          <h2 style="margin: 0px 10px">{{product.price |currency:"INR"}}</h2>
+          </ng-template>
+
+          <ng-template pTemplate="footer">
+              <span class="p-grid" style="padding-left: 44px;text-align: center;" >
+                   <span  *ngFor="let color of product.colors" style="padding-right: 7px;padding-left: 7px;cursor: pointer" (click)="getMediaImage(product,color,product.colors)">
+                       <span>{{color.label}} <br/>
+                   <span id="colorBox_{{color.value+product.sku}}" [style]="{ 'height': '25px',
+                             'width': '25px', 'border-radius': '50%','display': 'inline-block','border': '1px solid #BADA55'}"
+                         [style.background-color]="getColor(color.label)"></span>
+                       </span>
+            </span>
+               </span>
+            <span class="p-grid" [style.padding-left]="product.sizes.length>3 ? '25px':'56px'" style="padding-left: 25px;text-align: center; margin-bottom: 10px; margin-top: 10px" >
+                   <span *ngFor="let size of product.sizes" style="padding-right: 7px;padding-left: 7px;cursor: pointer" (click)="selectSize(product,size,product.sizes)">
+                   <span id="sizeBox_{{size.value+product.sku}}" class="sizeStyle">{{size.label}}</span>
+                       </span>
+            </span>
+<!--            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>-->
+          </ng-template>
+
+        </p-card>
+      </div>
+    </div>
+
+  </div>
+</div>

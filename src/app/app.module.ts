@@ -15,6 +15,14 @@ import { MenubarModule } from 'primeng/menubar';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CardModule, } from 'primeng/card';
 import {HttpClientModule} from "@angular/common/http"
+import { AvatarModule } from "primeng/avatar";
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import { PanelModule } from "primeng/panel";
+import { RippleModule } from "primeng/ripple";
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
@@ -35,7 +43,16 @@ import {HttpClientModule} from "@angular/common/http"
     MenubarModule,
     CardModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    AvatarModule,
+    BreadcrumbModule,
+    PanelModule,
+    RippleModule,
+    PanelMenuModule,
+    BrowserAnimationsModule,
+    CardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

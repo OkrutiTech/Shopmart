@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
-import {HomeService} from '../home/home.service'
+import {HomeService} from '../home/home.service';
+import {Router} from '@angular/router'
+import {ProductListComponent} from '../product-list/product-list.component'
 
 
 @Component({
@@ -9,8 +11,8 @@ import {HomeService} from '../home/home.service'
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  // data:[] = []
-  constructor(private homeService:HomeService) {
+
+  constructor(private homeService:HomeService,private _router:Router) {
 
   }
 
@@ -28,38 +30,27 @@ export class HeaderComponent implements OnInit {
                if(sub.children_data.length>0){
                  sub.items=sub.children_data.map((ssub:any)=>{
                    ssub.label=ssub.name;
+                   ssub.routerLink= `/category/${ssub.id}/products`;
                    return ssub;
                  });
+               }else{
+                sub.routerLink= `/category/${sub.id}/products`;
                }
                return sub;
              });
 
+           }else{
+             c.routerLink= `/category/${c.id}/products`;
            }
            return c;
         });
-        console.log(this.items)
+        this.homeService.setValue(this.items);
       }
     )
-    console.log(this.items)
-    // this.items = [
-    //   {
-    //     label:'File',
-    //
-    //   },
-    //   {
-    //     label:'Edit',
-    //
-    //   },
-    //   {
-    //     label:'Users',
-    //   },
-    //   {
-    //     label:'Events',
-    //   },
-    //   {
-    //     label:'Quit',
-    //   }
-    // ];
+
+  }
+  addNewUser(){
+    this._router.navigate(['/ProductListComponent'])
   }
 
 }

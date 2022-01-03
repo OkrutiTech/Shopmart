@@ -12,6 +12,164 @@ body{
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-text {
   color:white !important;
 }
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-text:hover {
+  color:#d2232a !important;
+}
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-text:active {
+  color:#d2232a !important;
+}
+p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
+ background: transparent!important;
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+}
+.p-menubar .p-menuitem-link:not(.p-disabled):hover {
+  background: transparent!important;
+}.p-menubar .p-menuitem-link:not(.p-disabled):active {
+  background: transparent!important;
+}
+.p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link, .p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:not(.p-disabled):hover {
+  background: #4F4F4F !important;
+
+}
+.p-menubar .p-submenu-list {
+  padding: 0.25rem 0;
+  background: #4F4F4F !important;
+  border: 0 none;
+  box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%);
+  width: 12.5rem;
+}
+.p-menubar .p-menuitem-link {
+  padding: 0.75rem 1rem;
+  border-radius: 0;
+  transition: box-shadow 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.p-menubar .p-menuitem-link .p-menuitem-text {
+  color: white !important;
+}
+.p-menubar .p-menuitem-link:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+}
+.p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link {
+  background: transparent !important;
+}
+.p-menubar .p-menuitem-link .p-menuitem-text:active {
+  color:#d2232a !important;
+}
+.p-menubar .p-menuitem-link .p-menuitem-text:hover {
+  color:#d2232a !important;
+}
+.p-avatar.p-avatar-image {
+  background-color: transparent;
+  width: 80% !important;
+  height: 80% !important;
+}
+.p-breadcrumb ul li .p-menuitem-link:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+}
+.p-breadcrumb {
+ background: #333333 !important;
+  border:none!important;
+}
+.p-breadcrumb ul li .p-menuitem-link .p-menuitem-text{
+  color:white !important;
+}
+.p-breadcrumb ul li.p-breadcrumb-chevron {
+  margin: 0 0.5rem 0 0.5rem;
+  color:white !important;
+}
+.p-breadcrumb ul li .p-menuitem-link .p-menuitem-text:active {
+  color:#d2232a !important;
+}.p-breadcrumb ul li .p-menuitem-link .p-menuitem-text:focus {
+  color:#d2232a !important;
+}.p-breadcrumb ul li .p-menuitem-link .p-menuitem-text:hover {
+  color:#d2232a !important;
+}
+.p-panelmenu .p-panelmenu-header > a {
+  padding: 1rem;
+  color: white !important;
+  background: #838383 !important;
+  font-weight: 600;
+  border-radius: 3px;
+  transition: box-shadow 0.2s;
+}
+.p-panelmenu .p-panelmenu-header > a:hover {
+  padding: 1rem;
+  color: #d2232a !important;
+  background: #838383 !important;
+  font-weight: 600;
+  border-radius: 3px;
+  transition: box-shadow 0.2s;
+}
+.p-panelmenu .p-panelmenu-header > a:active {
+  padding: 1rem;
+  color: #d2232a !important;
+  background: #838383 !important;
+  font-weight: 600;
+  border-radius: 3px;
+  transition: box-shadow 0.2s;
+}.p-panelmenu .p-panelmenu-header > a:focus {
+  padding: 1rem;
+  color: #d2232a !important;
+  background: #838383 !important;
+  font-weight: 600;
+  border-radius: 3px;
+  transition: box-shadow 0.2s;
+}
+.p-panelmenu .p-panelmenu-header > a:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+}
+
+.p-panelmenu .p-panelmenu-content {
+  padding: 0.25rem 0;
+  border: 1px solid #dee2e6;
+  background: #b8b5b5 !important;
+  color: white !important;
+  margin-bottom: 0;
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text {
+  color: white !important;
+}.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text:active {
+   color: #d2232a !important;
+}.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text :focus{
+    color: #d2232a !important;
+}.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text:hover {
+     color: #d2232a !important;
+}
+.p-card .p-card-content:hover {
+  background: #d2232a !important;
+  color:white !important;
+}
+.p-card-header img {
+  width:77% !important;
+}
+.p-card .p-card-footer:hover {
+  background: #a59e9e !important;
+  color:white !important;
+}
+.p-card .p-card-footer {
+  padding: 1rem 0 1rem 0 !important;
+
+}.p-card .p-card-body {
+  padding: 1rem 0 1rem 0 !important;
+}
 .p-inputtext:focus {
   outline: 0 none;
   outline-offset: 0;
