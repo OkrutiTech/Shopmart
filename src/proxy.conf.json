@@ -1,6 +1,6 @@
 {
   "/cart-backend": {
-    "target": "http://localhost:80",
+    "target": "http://192.168.1.11:80",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

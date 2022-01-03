@@ -1,24 +1,41 @@
-.inputbox
-{
-  margin-left: 150px;
-  font-size: 1em
+.textfield{
+  font-size: 1.2em;
+  margin-left: 120px;
 }
-.account{
-  text-align: center;
+.label{
+  color:#d2232a;
+}
+.buttonArea:hover{
+  background-color: #d2232a;
+}
+.submitButtonn{
+  margin-left: 120px;
+}
+.register{
+  text-align:center;
+  color: #d2232a;
+}
+.invalidInput{
+  border: #d2232a;
 
 }
-.createbotton{
-  margin-left: 600px;
+.is-invalid{
+  border-right:5px solid #d2232a !important;
 }
-.labelText{
-  margin-left: 150px;
-  font-size: 1.4em;
+.is-valid{
+  border-right:5px solid green !important;
 }
-.buttoncolor:hover{
- background-color: red;
+.errorMessage{
+  margin-left: 120px;
 }
-.imageset{
-  height: 145px;
-  width: 170px;
-    
+.successMessage{
+  margin-left: 120px;
+  color: green;
+
+}
+.cross-icon{
+  color: red;
+}
+.check-icon{
+  color: green;
 }

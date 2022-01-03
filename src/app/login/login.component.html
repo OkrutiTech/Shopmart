@@ -1,29 +1,67 @@
-<body bgcolor="#dcdcdc">
-<h1 class="account">Account</h1><br>
-<div class="p-col-12 line"></div>
-<div style="display: flex" class="p-col-12 p-md-12 p-m-0 p-p-0">
-  <div>
-    <div>
-      <label class="labelText">Email</label>
-      <br>
-      <input id="email" type="email" size="75"  class="p-component inputbox p-inputtext" pInputText placeholder="">
-    </div>
-
-    <div class="p-field">
-      <label class="labelText">Password</label><br>
-      <input id="password" size="75" type="text" class="p-inputtext inputbox p-component" pInputText placeholder="">
-    </div>
-  </div>
-
-  <div style="float:right;
-    margin-left: 75px;">
-    <img src="../../assets/images/shoes.jpg" class="imageset" alt="image">
-  </div>
-</div>
-
-<br>
 <div>
-  <button pButton type="button" class="p-inputtext inputbox buttoncolor p-button" >Login</button>
-<button pButton type="button" (click)="navigateToSignUp()" class="p-inputtext buttoncolor createbotton p-button" >Create an Account</button>
+  <div class="register"><h1>Account</h1></div>
+  <div class="p-grid">
+    <div class="p-col-7">
+      <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label class="textfield label">Email *</label><br>
+          <input
+            size="60"
+            id="email"
+            type="email"
+            formControlName="email"
+            class="form-control p-inputtext textfield p-component"
+            pInputText placeholder=""
+            [ngClass]="f.email.errors ? 'is-invalid' : 'is-valid'"
+          />
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+
+            <div *ngIf="f.email.errors.required"><span class="errorMessage">Email is required</span></div>
+            <div *ngIf="f.email.errors.email"><span class="errorMessage">Email is invalid</span></div>
+            <div *ngIf="f.email.errors.minlength"><span class="errorMessage">Email Must Be Contain 8 Characters</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="textfield label">Password *</label><br>
+          <input
+            size="60"
+            type="password"
+            formControlName="password"
+            class="form-control p-inputtext textfield p-component"
+            [ngClass]="f.password.errors ? 'is-invalid' : 'is-valid'"
+          />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required"><span class="errorMessage">Password is required</span></div>
+            <div *ngIf="f.password.errors.minlength">
+              <span class="errorMessage">Password must be at least 6 characters</span>
+            </div>
+            <div *ngIf="f.password.errors.maxlength"><span class="errorMessage">
+          Username must not exceed 40 characters</span>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <button pButton type="submit" class="p-inputtext  submitButtonn buttonArea p-button"
+                  [disabled]="logInForm.invalid">LogIn
+          </button>
+          <button
+            pButton type="button" class="p-inputtext  submitButtonn buttonArea p-button"
+            (click)="onReset()"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="p-col-4">
+      <img src="../../assets/images/cart.webp" alt="cart" style="width:400px;height:350px;">
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col-8"></div>
+    <div class="p-col-3"><button pButton type="button" (click)="navigateToSignUp()" class="p-inputtext buttoncolor createbotton p-button" >Create an Account</button></div>
+  </div>
 </div>
-</body>

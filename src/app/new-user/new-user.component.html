@@ -1,33 +1,96 @@
-<body bgcolor="#dcdcdc">
-<h1 class="register">REGISTER</h1><br>
 <div>
-  <label class="textfield">First Name</label>
-  <br>
-  <input  [(ngModel)]="signUpFrom.firstname" id="firstname" type="text" size="75"  class="p-component textfield p-inputtext" pInputText placeholder=""><br>
-</div>
-<div class="p-field">
-  <label class="textfield">Last Name</label><br>
-  <input id="lastname"  [(ngModel)]="signUpFrom.lastname" size="75" type="text" class="p-inputtext textfield p-component" pInputText placeholder=""><br>
-</div>
-<div class="p-field" [class.has-error]="emailcontrol.invalid && emailcontrol.touched" [class.has-success]="emailcontrol.valid">
-  <label class="textfield">Email</label><br>
-  <input required id="email" pattern="[a-zA-Z ]*" [(ngModel)]="signUpFrom.email" size="75" type="email" name="email" class="p-inputtext textfield p-component" ngModel #emailcontrol="ngModel" pInputText placeholder="">
-<span *ngIf="emailcontrol.invalid && emailcontrol.touched">Email Is Required</span>
-  <br>
-</div>
-<div class="p-field">
-  <label class="textfield">Password</label><br>
-  <input id="password"   [(ngModel)]="signUpFrom.password" size="75" type="password" class="p-inputtext textfield p-component" pInputText placeholder=""><br>
-</div>
-<button pButton type="button" class="p-inputtext  submitButtonn buttonArea p-button" (click)="onSubmit()">Submit</button>
-</body>
+  <div class="register"> <h1 >REGISTER</h1></div>
+  <div class="p-grid">
+    <div class="p-col-7">
+      <form [formGroup]="signUpFrom" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label class="textfield label">First Name *</label><br>
+          <input
+            size="60"
+            id="firstname"
+            type="text"
+            formControlName="firstname"
+            class="form-control p-inputtext textfield p-component"
+            pInputText placeholder=""
+            [ngClass]="f.firstname.errors ? 'is-invalid' : 'is-valid'"
+          />
+          <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+            <div *ngIf="f.firstname.errors.required"><span class="errorMessage"> firstname is required</span></div>
+            <div *ngIf="f.firstname.errors.minlength"><span class="errorMessage">First Name Must Be Contain 3 Characters</span></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="textfield label">Last Name *</label><br>
+          <input
+            size="60"
+            id="lastname"
+            type="text"
+            formControlName="lastname"
+            class="form-control p-inputtext textfield p-component"
+            pInputText placeholder=""
+            [ngClass]="f.lastname.errors ? 'is-invalid' : 'is-valid'"
+          />
+          <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+            <div *ngIf="f.lastname.errors.required"><span class="errorMessage">lastname is required</span></div>
+            <div *ngIf="f.lastname.errors.minlength"><span class="errorMessage">Last Name Must Be Contain 4 Characters</span></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="textfield label">Email *</label><br>
+          <input
+            (blur)="validateEmail()"
+            size="60"
+            id="email"
+            type="email"
+            formControlName="email"
+            class="form-control p-inputtext textfield p-component"
+            pInputText placeholder=""
+            [ngClass]="f.email.errors ? 'is-invalid' : 'is-valid'"
+          />
+          <span *ngIf="f.email.value && f.email.errors" class="pi pi-times cross-icon"></span>
+          <span *ngIf="!f.email.errors" class="pi pi-check check-icon"></span>
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
 
-<!--<div class="form-group">-->
-<!--  <label for ="email">Email</label>-->
-<!--  <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" ngModel #emailref="ngModel">-->
-<!--  <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class ="alert alert-danger">-->
-<!--    <div [hidden]="!emailref.errors?.pattern">-->
-<!--      Invalid pattern-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+            <div *ngIf="f.email.errors.required"><span class="errorMessage">Email is required</span></div>
+            <div *ngIf="f.email.errors.email"><span class="errorMessage">Email is invalid</span></div>
+            <div *ngIf="f.email.errors.minlength"><span class="errorMessage">Email Must Be Contain 8 Characters</span></div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="textfield label">Password *</label><br>
+          <input
+            size="60"
+            type="password"
+            formControlName="password"
+            class="form-control p-inputtext textfield p-component"
+            [ngClass]="f.password.errors ? 'is-invalid' : 'is-valid'"
+          />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required"><span class="errorMessage">Password is required</span></div>
+            <div *ngIf="f.password.errors.minlength">
+              <span class="errorMessage">Password must be at least 6 characters</span>
+            </div>
+            <div *ngIf="f.password.errors.maxlength"><span class="errorMessage">
+          Username must not exceed 40 characters</span>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <button pButton type="submit"  class="p-inputtext  submitButtonn buttonArea p-button" [disabled]="signUpFrom.invalid">Register</button>
+          <button
+            pButton type="button" class="p-inputtext  submitButtonn buttonArea p-button"
+            (click)="onReset()"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="p-col-4">
+      <img src="../../assets/images/cart.webp" alt="cart" style="width:400px;height:350px;">
+    </div>
+  </div>
+
+</div>

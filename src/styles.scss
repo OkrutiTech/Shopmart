@@ -12,3 +12,14 @@ body{
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-text {
   color:white !important;
 }
+.p-inputtext:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+  border-color:transparent !important;
+}.p-inputtext:hover {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+  border-color:transparent !important;
+}
