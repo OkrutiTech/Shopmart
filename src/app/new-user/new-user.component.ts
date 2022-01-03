@@ -78,9 +78,6 @@ formControlStatus:any;
       )
     }
   }
-  isFormControlFieldIsValid(controlValue){
-   return this.signUpFrom.controls[controlValue].valid;
-  }
 }
 
 
