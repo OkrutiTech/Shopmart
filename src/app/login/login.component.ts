@@ -6,7 +6,9 @@ import {
   FormGroup,
   Validators
 }from '@angular/forms';
-
+import {LoginService} from "./login.service";
+import {CartService} from "../cart/cart.service";
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ import {
 export class LoginComponent implements OnInit {
   logInForm: FormGroup;
   submitted = false;
-  constructor(private router: Router,private formBuilder:FormBuilder) { }
+  loading:string;
+  constructor(private router: Router,private formBuilder:FormBuilder,private logInService:LoginService,private cartService:CartService) { }
 
 
   ngOnInit(): void {
@@ -48,6 +51,71 @@ export class LoginComponent implements OnInit {
       return;
     }
     console.log(JSON.stringify(this.logInForm.value, null, 2));
+  }
+
+  customerLogin() {
+    if (this.logInForm.controls.email.invalid || this.logInForm.controls.password.invalid) {
+      return;
+    }
+    this.loading="Validate Credentials";
+    let user = {
+      username: this.logInForm.controls.email.value,
+      password: this.logInForm.controls.password.value
+    };
+    let tokenData='';
+    this.logInService.getCustomerToken(user)
+      .subscribe(
+        token => {
+          // this._cookie.put('customerToken', "Bearer " + token);
+          tokenData="Bearer " + token;
+            // this._cookie.get('customerToken');
+          // this.messageService.add({severity:'success', summary:'Login', detail:'Login customer Successfully'});
+
+          // this.toastr.success("Login customer Successfully");
+          this.loading="Loading Customer";
+          this.logInService.getCustomerDetail(tokenData)
+            .subscribe(
+              customer => {
+                // this._cookie.put('customerDetail', JSON.stringify(customer));
+                // this.messageService.add({severity:'success', summary:'Customer', detail:'Customer details loaded Successfully'});
+
+                // this.toastr.success("customer loaded Successfully");
+                this.loading="Loading customer cart";
+                this.cartService.getCustomerCartDetail(tokenData)
+                  .subscribe(
+                    (cart:any) => {
+                      let cartData = {
+                        itemsCount: cart.items_count
+                        // itemsCount: cart,
+
+                      };
+                      // this._cookie.put('customerCartCount', JSON.stringify(cartData));
+                      this.cartService.setCartItemCount(cartData.itemsCount);
+                      // this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
+
+                      // this.toastr.success("customer cart loaded Successfully");
+                      this.router.navigate(['']);
+                    },
+                    error => {
+                      this.loading="";
+                      this.router.navigate(['login']);
+                      // this.toastr.error(error.message);
+                    }
+                  );
+              },
+              error => {
+                this.loading="";
+                this.router.navigate(['login']);
+                // this.toastr.error(error.message);
+              }
+            );
+        },
+        error => {
+          this.loading="";
+          this.router.navigate(['login']);
+          // this.toastr.error(error.message);
+        }
+      );
   }
 
   onReset(): void {

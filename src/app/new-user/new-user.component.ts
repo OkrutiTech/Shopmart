@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-user',
@@ -17,7 +18,8 @@ export class NewUserComponent implements OnInit {
   submitted = false;
 emailStatus:boolean=false;
 formControlStatus:any;
-  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService) {}
+  createCustomer="";
+  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService,private _router: Router) {}
 
   ngOnInit(): void {
     this.signUpFrom = this.formBuilder.group(
@@ -71,14 +73,77 @@ formControlStatus:any;
     if(this.signUpFrom.controls.email.valid){
       let emailData = {"customerEmail": this.signUpFrom.controls.email.value};
       this.newUserService.validateEmail(emailData).subscribe(
-        (data:any)=> {
-         this.emailStatus=data;
+        (emailExists:any)=> {
+         this.emailStatus=emailExists;
          console.log(this.emailStatus)
         }
       )
     }
   }
+  createCustomerAccount() {
+    if (this.signUpFrom.controls.email && !this.signUpFrom.controls.emailExists) {
+      this.createCustomer="Creating customer";
+      let customerData = {
+        "customer": {
+          "email": this.signUpFrom.controls.email.value,
+          "firstname": this.signUpFrom.controls.firstname.value,
+          "lastname": this.signUpFrom.controls.lastname.value,
+          "storeId": 1,
+          "websiteId": 1
+        },
+        "password": this.signUpFrom.controls.password.value,
+      };
+
+      this.newUserService.signUp(customerData)
+        .subscribe(
+          customer => {
+            // this._cookie.put('customerDetail',JSON.stringify(customer));
+            let user = {
+              username: customerData.customer.email,
+              password: customerData.password
+            };
+            this.newUserService.getCustomerToken(user)
+              .subscribe(
+                token => {
+                  // this._cookie.put('customerToken', "Bearer " + token);
+                  // let tokenData=this._cookie.get('customerToken');
+                  let tokenData="Bearer " + token;
+                  this.createCustomer="Creating customer cart";
+                  // this.messageService.add({severity:'success', summary:'Customer', detail:'Create customer Successfully'});
+
+                  // this.toastr.success("Create customer Successfully");
+                  this.newUserService.customerCartCreate(tokenData)
+                    .subscribe(
+                      cart => {
+                        //console.log(cart);
+                        // this.messageService.add({severity:'success', summary:'Customer', detail:'Customer cart created Successfully"'});
+
+                        // this.toastr.success("customer cart created Successfully");
+
+                        this._router.navigate(['']);
+                      },
+                      // error => {
+                      //   this.toastr.error(error.message);
+                      // }
+                    );
+                },
+                // error => {
+                //   this.toastr.error(error.message);
+                // }
+              );
+          },
+          // error => {
+          //   this.toastr.error(error.message);
+          // }
+        );
+
+    }
+
+
+  }
+
 }
+
 
 
 

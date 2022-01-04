@@ -2,7 +2,7 @@
   <div class="register"><h1>Account</h1></div>
   <div class="p-grid">
     <div class="p-col-7">
-      <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="logInForm">
         <div class="form-group">
           <label class="textfield label">Email *</label><br>
           <input
@@ -44,7 +44,7 @@
         </div>
         <br>
         <div class="form-group">
-          <button pButton type="submit" class="p-inputtext  submitButtonn buttonArea p-button"
+          <button pButton type="button" class="p-inputtext  submitButtonn buttonArea p-button" (click)="customerLogin()"
                   [disabled]="logInForm.invalid">LogIn
           </button>
           <button

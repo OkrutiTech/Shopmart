@@ -2,7 +2,7 @@
   <div class="register"> <h1 >REGISTER</h1></div>
   <div class="p-grid">
     <div class="p-col-7">
-      <form [formGroup]="signUpFrom" (ngSubmit)="onSubmit()">
+      <form [formGroup]="signUpFrom">
         <div class="form-group">
           <label class="textfield label">First Name *</label><br>
           <input
@@ -78,7 +78,7 @@
         </div>
         <br>
         <div class="form-group">
-          <button pButton type="submit"  class="p-inputtext  submitButtonn buttonArea p-button" [disabled]="signUpFrom.invalid">Register</button>
+          <button pButton type="button"  class="p-inputtext  submitButtonn buttonArea p-button" [disabled]="signUpFrom.invalid"  (click)="createCustomerAccount()">Register</button>
           <button
             pButton type="button" class="p-inputtext  submitButtonn buttonArea p-button"
             (click)="onReset()"

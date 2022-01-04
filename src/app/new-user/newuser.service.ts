@@ -1,5 +1,5 @@
 import {Injectable, Input} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient,HttpHeaders } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,19 @@ validateEmail(payload:any)
   return this.http.post(url,payload);
 }
 signUp(payload:any){
-    let url='/cart-backend/rest/V1/customers/'
+    let url='/cart-backend/rest/V1/customers'
   return this.http.post(url,payload);
 }
+  getCustomerToken(user:any){
+
+    let url='/cart-backend/rest/V1/integration/customer/token'
+    return this.http.post(url,user)
+  }
+  customerCartCreate(tokenData:any){
+    let url='/cart-backend/rest/V1/carts/mine'
+    const headers= new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('authorization', tokenData);
+    return this.http.post(url,null, {headers:headers})
+  }
 }

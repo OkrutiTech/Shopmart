@@ -41,9 +41,7 @@ export class ProductListComponent implements OnInit {
 
     this.categories = this.homeService.getValue();
     this.route.params.subscribe((params: any) => {
-      console.log(params) //log the entire params object
       this.currentCategoryId = params['id'];
-      // console.log(this.id)
       this.productService.getProductDataById(this.currentCategoryId).subscribe((products: any) => {
           this.resetProducts();
           if (!products.items) {
