@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {
   AbstractControl,
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   logInForm: FormGroup;
   submitted = false;
   loading:string;
-  constructor(private router: Router,private formBuilder:FormBuilder,private logInService:LoginService,private cartService:CartService) { }
+  constructor(private router: Router,private formBuilder:FormBuilder,private logInService:LoginService,private cartService:CartService,private cookiesService:CookieService) { }
 
 
   ngOnInit(): void {
@@ -66,9 +67,9 @@ export class LoginComponent implements OnInit {
     this.logInService.getCustomerToken(user)
       .subscribe(
         token => {
-          // this._cookie.put('customerToken', "Bearer " + token);
+          this.cookiesService.set('customerToken', "Bearer " + token);
           tokenData="Bearer " + token;
-            // this._cookie.get('customerToken');
+            this.cookiesService.get('customerToken');
           // this.messageService.add({severity:'success', summary:'Login', detail:'Login customer Successfully'});
 
           // this.toastr.success("Login customer Successfully");
@@ -76,7 +77,7 @@ export class LoginComponent implements OnInit {
           this.logInService.getCustomerDetail(tokenData)
             .subscribe(
               customer => {
-                // this._cookie.put('customerDetail', JSON.stringify(customer));
+                this.cookiesService.set('customerDetail', JSON.stringify(customer));
                 // this.messageService.add({severity:'success', summary:'Customer', detail:'Customer details loaded Successfully'});
 
                 // this.toastr.success("customer loaded Successfully");
@@ -89,7 +90,7 @@ export class LoginComponent implements OnInit {
                         // itemsCount: cart,
 
                       };
-                      // this._cookie.put('customerCartCount', JSON.stringify(cartData));
+                      this.cookiesService.set('customerCartCount', JSON.stringify(cartData));
                       this.cartService.setCartItemCount(cartData.itemsCount);
                       // this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
 

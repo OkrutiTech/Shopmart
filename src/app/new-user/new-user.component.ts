@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NewUserService} from "./newuser.service";
+import {CookiesService} from "../shared/cookie.service";
+import { CookieService } from 'ngx-cookie-service';
 import {
   AbstractControl,
   FormBuilder,
@@ -19,7 +21,7 @@ export class NewUserComponent implements OnInit {
 emailStatus:boolean=false;
 formControlStatus:any;
   createCustomer="";
-  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService,private _router: Router) {}
+  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService,private _router: Router,private cookieService:CookieService) {}
 
   ngOnInit(): void {
     this.signUpFrom = this.formBuilder.group(
@@ -97,7 +99,8 @@ formControlStatus:any;
       this.newUserService.signUp(customerData)
         .subscribe(
           customer => {
-            // this._cookie.put('customerDetail',JSON.stringify(customer));
+
+            this.cookieService.set('customerDetail',JSON.stringify(customer));
             let user = {
               username: customerData.customer.email,
               password: customerData.password
@@ -105,9 +108,9 @@ formControlStatus:any;
             this.newUserService.getCustomerToken(user)
               .subscribe(
                 token => {
-                  // this._cookie.put('customerToken', "Bearer " + token);
-                  // let tokenData=this._cookie.get('customerToken');
-                  let tokenData="Bearer " + token;
+                  this.cookieService.set('customerToken', "Bearer " + token);
+                 let tokenData=this.cookieService.get('customerToken');
+                  tokenData="Bearer " + token;
                   this.createCustomer="Creating customer cart";
                   // this.messageService.add({severity:'success', summary:'Customer', detail:'Create customer Successfully'});
 

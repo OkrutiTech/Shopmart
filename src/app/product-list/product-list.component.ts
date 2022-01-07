@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router'
+import {ActivatedRoute,Router} from '@angular/router'
 import {ProductService} from './product-service'
 import {HomeService} from '../home/home.service'
 import * as _ from 'underscore';
@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
   error: string;
   validateProduct: boolean;
 
-  constructor(private route: ActivatedRoute, private productService: ProductService, private homeService: HomeService, private primengConfig: PrimeNGConfig) {
+  constructor(private route: ActivatedRoute,private router: Router, private productService: ProductService, private homeService: HomeService, private primengConfig: PrimeNGConfig) {
   }
 
   ngOnInit(): void {
@@ -291,7 +291,7 @@ export class ProductListComponent implements OnInit {
 
     let currentProduct = {skuProducts: skuProducts, product: product, filters: this.filters};
     this.productService.setCurrentProductData(currentProduct);
-    // this.router.navigate([`category-id/${this.currentCategoryId}/product-sku/${product.sku}`]);
+    this.router.navigate([`category-id/${this.currentCategoryId}/product-sku/${product.sku}`]);
 
   }
 

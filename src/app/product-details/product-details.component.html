@@ -1,0 +1,108 @@
+<div class="p-col-12 p-d-inline-flex" style="margin-top: 20px;" *ngIf="currentProduct">
+  <div class="p-col-1"></div>
+
+  <a style="cursor: pointer;">
+    <b><span>Home</span></b>
+    <span style=" width: 32px;display: inline-block;text-align: center;">
+                 >
+            </span>
+    <b><span style="color: white">{{currentProduct.name}}</span></b>
+  </a>
+
+</div>
+
+
+<div class="spinner-wrapper" *ngIf="validateProduct"><div class="spinner"></div></div>
+<div class="p-grid" style="margin-top: 20px" *ngIf="currentProduct">
+  <div class="p-col-1"></div>
+  <div class="p-col-5" >
+    <p-carousel [value]="images" [numVisible]="1" [numScroll]="1">
+      <ng-template let-image pTemplate="item">
+        <img style="height: 500px; border-style: groove" src="http://192.168.1.11:80/cart-backend/pub/media/catalog/product{{image.file}}"
+             alt="Random first slide">
+      </ng-template>
+    </p-carousel>
+  </div>
+<!--    <div class="wrapper" style="height: 650px;padding-top: 25%; margin:0 auto;" *ngIf="images && images.length===0">-->
+<!--      <p-progressSpinner strokeWidth="3" mode='indeterminate'-->
+<!--                   style="margin:0 auto;stroke: #673ab7;"></p-progressSpinner>-->
+<!--      <span >Loading Images</span>-->
+<!--    </div>-->
+  <div class="p-col-1"></div>
+  <div class="p-col-5">
+    <div>
+      <div style="font-size: 2.8em;color: #d2232a">{{currentProduct.name}}</div>
+      <br>
+      <div>
+        <div style="font-size: 1.2em;display: inline-block; color: #333333">
+        Price  {{currentProduct.price +" &#8377;" }}
+        </div>
+        <br><br>
+        <div style="display: inline-block;float:  inline-start">
+          <span style="font-size: 1.6em;text-align: center;color: darkgoldenrod">IN STOCK</span><br>
+          <span style="text-align: center;color: darkgoldenrod"><b>SKU # :{{currentProduct.sku}}</b></span>
+        </div>
+      </div>
+    <br>
+<!--    <div class="dropdown-divider"></div>-->
+    <div style="padding-top: 10px;">
+      <span style="font-size: 1.4em">Color</span><br>
+      <div  style="padding-left: 44px; text-align: center;" >
+            <span  *ngFor="let color of currentProduct.colors" style="padding-right: 7px;padding-left: 7px;cursor: pointer;float: left" (click)="getMediaGallery(color)">
+                       <span>{{color.label}}<br/>
+                   <span id="colorBox_{{color.value+currentProduct.sku}}" style=" height: 25px;
+                             width: 25px; border-radius: 50%;display: inline-block;border: 1px solid #BADA55"
+                         [style.background-color]="getColor(color.label)"></span>
+                       </span>
+            </span>
+               </div>
+      <br>
+      <div style="padding-top: 30px;">
+            <span style="font-size: 1.5em;color: #d2232a">Size</span><br>
+            <span  style="padding-left: 25px;text-align: center; margin-bottom: 10px;">
+                <span *ngFor="let size of currentProduct.sizes" style="padding-right: 7px;padding-left: 7px;" (click)="selectSize(size)">
+
+                   <span id="sizeBox_{{size.value+currentProduct.sku}}" style=" height: 22px;
+                             width: 25px; display: inline-block; background-color: darkgray" >{{size.label}}</span>
+                       </span>
+            </span>
+                </div>
+
+    </div>
+</div>
+
+    <div style="color: indianred;font-size: 1.5em; padding-top: 15px"><b>Images</b></div>
+     <span *ngFor="let image of images">
+    <img style="height: 100px;width: 80px;padding: 5px" src="http://192.168.1.11:80/cart-backend/pub/media/catalog/product{{image.file}}">
+    </span>
+
+
+  </div></div>
+
+<div class="p-grid">
+  <div class="p-col-1"></div>
+<div class="p-col-10" style="margin-top: 20px;background-color: #dee2e6" *ngIf="currentProduct">
+<!--    <p-card header="About Product" subheader="Description" [style]="{width: '100%'}" styleClass="p-card-shadow">-->
+<!--      <ng-template pTemplate="header">-->
+<!--      </ng-template>-->
+<!--      <div style="padding-top: 10px" [innerHTML]="currentProduct.description"></div>-->
+<!--      <div style="padding-top: 10px" *ngFor="let moreInformation of moreInformations ">-->
+<!--        <span ><b>{{moreInformation.code}}</b></span> : <span>{{moreInformation.value}}</span>-->
+<!--      </div>-->
+<!--    </p-card>-->
+
+
+  <p-tabView>
+    <p-tabPanel header="Description">
+      <div  style="padding-top: 10px;background-color: lavender" [innerHTML]="currentProduct.description"></div>
+    </p-tabPanel>
+    <p-tabPanel header="Information">
+      <div style="padding-top: 10px;background-color: lavender" *ngFor="let moreInformation of moreInformations ">
+        <span ><b>{{moreInformation.code}}</b></span> : <span>{{moreInformation.value}}</span>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+
+
+</div>
+</div>

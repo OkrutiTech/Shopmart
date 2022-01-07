@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +24,16 @@ import { RippleModule } from "primeng/ripple";
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
+import {CookieService} from "ngx-cookie-service";
+import {BadgeModule} from 'primeng/badge';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {CookiesService} from "./shared/cookie.service";
+import {ProductDetailsComponent} from './product-details/product-details.component';
+import {CarouselModule} from 'primeng/carousel';
+import {ProductDetailsService} from "./product-details/product-details.service";
+import {TabMenuModule} from 'primeng/tabmenu';
+import {MenuItemContent} from "primeng/menu";
+import {TabViewModule} from 'primeng/tabview';
 
 
 @NgModule({
@@ -32,9 +44,12 @@ import {FormsModule} from "@angular/forms";
     HomeComponent,
     LoginComponent,
     NewUserComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductDetailsComponent,
   ],
   imports: [
+    MessagesModule,
+    MessageModule,
     InputTextModule,
     BrowserModule,
     AppRoutingModule,
@@ -53,8 +68,16 @@ import {FormsModule} from "@angular/forms";
     PanelMenuModule,
     BrowserAnimationsModule,
     CardModule,
+    BadgeModule,
+    CarouselModule,
+    ProgressSpinnerModule,
+    TabMenuModule,
+    TabViewModule
+
+
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CookieService],
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

@@ -25,8 +25,9 @@
       <div class="p-col-4" *ngFor="let product of categoryProducts">
         <p-card [style]="{padding:0}" styleClass="p-card-shadow">
           <ng-template pTemplate="header">
-            <img alt="Card" height="214" width="234" style="margin-left: 30px"
-                 src="http://localhost/cart-backend/pub/media/catalog/product{{product.image}}">
+
+            <img alt="Card" height="214" width="234" style="margin-left: 30px" (click)="populateDetailProduct(product)"
+                 src="http://192.168.1.11:80/cart-backend/pub/media/catalog/product{{product.image}}">
           </ng-template>
 
           <ng-template pTemplate="subheader">
