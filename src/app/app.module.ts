@@ -40,6 +40,7 @@ import {TabViewModule} from 'primeng/tabview';
 import {NgxImageZoomModule} from 'ngx-image-zoom'
 import {CookieService} from "ngx-cookie-service";
 import {RatingModule} from 'primeng/rating';
+import { BuyProductComponent } from './buy-product/buy-product.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import {RatingModule} from 'primeng/rating';
     AddtocardComponent,
     LoginDailogComponent,
 ProductDetailsComponent,
+BuyProductComponent,
   ],
   imports: [
     MessagesModule,
