@@ -11,6 +11,8 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import {CookieService} from "ngx-cookie-service";
+import {UserMessageService} from "../user-message.service";
 
 @Component({
   selector: 'app-addtocard',
@@ -43,11 +45,12 @@ export class AddtocardComponent implements OnInit {
   @Input() size:any
   @Input() color:any
   @Input() allProducts:any
+  loginShowPopup:boolean=false
   msgs: Message[] = [];
   position: string;
   addToCartFrom: FormGroup;
-  constructor(private formBuilder: FormBuilder,private cartService:CartService,private messageService:MessageService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
-
+  customerToken:any
+  constructor(private formBuilder: FormBuilder,private cartService:CartService,private messageService:MessageService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig,private cookiesService:CookieService,private userMessageService:UserMessageService) {
   }
   error:string;
   mediaImage:string;
@@ -63,22 +66,34 @@ export class AddtocardComponent implements OnInit {
     );
   }
   showDialog(){
-    this.addToCartShow=!this.addToCartShow;
-    setTimeout(()=>{
-      if(this.color && this.color.value){
-        this.getMediaImage(this.product,this.color,this.product.colors)
+     let customerToken=this.cookiesService.get('customerToken')
+    this.customerToken=customerToken
+    if(customerToken){
+      this.addToCartShow=!this.addToCartShow;
+      this.sendMessage(true)
+      this.loginShowPopup=false
+      setTimeout(()=>{
+        if(this.color && this.color.value){
+          this.getMediaImage(this.product,this.color,this.product.colors)
 
-      }
-      if(this.size && this.size.value){
-        this.selectSize(this.product,this.size,this.product.sizes)
+        }
+        if(this.size && this.size.value){
+          this.selectSize(this.product,this.size,this.product.sizes)
 
-      }
-    }, 3000);
-
+        }
+      }, 3000);
+    }
+    else{
+        this.addToCartShow=false;
+        this.loginShowPopup=!this.loginShowPopup
+    }
+  }
+  sendMessage(data:boolean){
+    this.userMessageService.sendUserMessage(data)
   }
   validateThenAddToCart(){
     let response = this.cartService.validateCart(this.product, this.color, this.size,this.addToCartFrom.controls.qty.value);
-
+     console.log(this.addToCartFrom.controls.qty.value)
     if (response && response.error) {
       this.error = response.error;
       return;
@@ -99,7 +114,7 @@ export class AddtocardComponent implements OnInit {
     if (this.color) {
       productSku = productSku + "-" + this.color.label;
     }
-    this.cartService.quoteId().subscribe(
+    this.cartService.quoteId(this.customerToken).subscribe(
       quoteId => {
         let cartItem = {
           "cart_item": {
@@ -108,7 +123,7 @@ export class AddtocardComponent implements OnInit {
             "qty": this.addToCartFrom.controls.qty.value
           }
         };
-        return this.cartService.addCartItem(cartItem).subscribe(
+        return this.cartService.addCartItem(cartItem,this.customerToken).subscribe(
           cartItem => {
             this.messageService.add({severity:'success', summary:'Cart', detail:'"Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty'});
 
@@ -119,7 +134,7 @@ export class AddtocardComponent implements OnInit {
             let cartData = {
               itemsCount: setCartItemCount
             };
-            // this._cookie.put('customerCartCount', JSON.stringify(cartData));
+            this.cookiesService.set('customerCartCount', JSON.stringify(cartData));
             this.validateProduct=false;
             this.addToCartShow=false;
             return {cartItem: cartItem};

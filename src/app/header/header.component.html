@@ -10,13 +10,13 @@
     <div class="p-md-12 p-m-0 p-p-0" style="background: #333333;color:white; height:60px">
       <div class="p-col-12 p-md-4" style="float: right">
         <div class="card">
-          <span class="header-text">welcome {{username}}</span>
           <p-avatar
             label="U"
             styleClass="p-mr-2"
             [style]="{'background-color': '#f6f6f6'}"
             shape="circle">
           </p-avatar>
+          <span class="header-text">Welcome<span *ngIf="username">{{username}}</span></span>
         </div>
       </div>
     </div>
@@ -37,5 +37,5 @@
    <span *ngIf="count"><p-badge [value]="count" size="small" class="cartItemCount" severity="success" severity="success"></p-badge></span>
     <br><span>Cart</span></i>
   </a>
-  <a class="logout sidebarIcon"><i class="pi pi-sign-out" style="font-size: 1rem"><br><span>Logout</span></i></a>
+  <a class="logout sidebarIcon"><i class="pi pi-sign-out" style="font-size: 1rem" (click)="logout()"><br><span>Logout</span></i></a>
 </div>

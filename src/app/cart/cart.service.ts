@@ -21,10 +21,10 @@ export class CartService{
   getCartItemCount() {
     return this.cartItemCount ;
   }
-  quoteId() {
+  quoteId(tokenData) {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
-      .set('authorization', 'tokenData');
+      .set('authorization', tokenData);
     // let tokenData=this._cookie.get("customerToken");
     let url='/cart-backend/rest/V1/carts/mine'
     // options.headers.set("authorization", tokenData);
@@ -33,10 +33,10 @@ export class CartService{
       // .catch(this.handleError);
   }
 
-  addCartItem(cartItem) {
+  addCartItem(cartItem,tokenData) {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
-      .set('authorization', 'tokenData');
+      .set('authorization', tokenData);
     let url='/cart-backend/rest/V1/carts/mine/items'
     return this.http.post(url,cartItem,{headers:headers})
       // .map((response: Response) =>response.json())

@@ -13,6 +13,8 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import {CookieService} from "ngx-cookie-service";
+import {AddtocardComponent} from "../addtocard/addtocard.component";
 
 @Component({
   selector: 'app-login-dailog',
@@ -45,23 +47,13 @@ export class LoginDailogComponent implements OnInit {
   logInForm:FormGroup;
   submitted = false;
   loading:string;
-  // addToCartFrom: FormGroup;
-  constructor(private formBuilder: FormBuilder,private cartService:CartService,private messageService:MessageService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig,private router:Router,private logInService:LoginService) {
+  constructor(private formBuilder: FormBuilder,private cartService:CartService,private messageService:MessageService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig,private router:Router,private logInService:LoginService,private cookiesService:CookieService,private addtoCart:AddtocardComponent) {
 
   }
   error:string;
-  mediaImage:string;
-  addToCartShow:boolean;
-  validateProduct:boolean;
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    // this.addToCartFrom = this.formBuilder.group(
-    //   {
-    //     qty: [1,Validators.required]
-    //   },
-    // );
-
     this.logInForm = this.formBuilder.group(
       {
         email: ['', [Validators.required, Validators.email
@@ -87,7 +79,6 @@ export class LoginDailogComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    // let signUp={""}
     if (this.logInForm.invalid) {
       return;
     }
@@ -107,7 +98,7 @@ export class LoginDailogComponent implements OnInit {
     this.logInService.getCustomerToken(user)
       .subscribe(
         token => {
-          // this._cookie.put('customerToken', "Bearer " + token);
+          this.cookiesService.set('customerToken', "Bearer " + token);
           tokenData="Bearer " + token;
           // this._cookie.get('customerToken');
           this.messageService.add({severity:'success', summary:'Login', detail:'Login customer Successfully'});
@@ -117,7 +108,7 @@ export class LoginDailogComponent implements OnInit {
           this.logInService.getCustomerDetail(tokenData)
             .subscribe(
               customer => {
-                // this._cookie.put('customerDetail', JSON.stringify(customer));
+                this.cookiesService.set('customerDetail', JSON.stringify(customer));
                 this.messageService.add({severity:'success', summary:'Customer', detail:'Customer details loaded Successfully'});
 
                 // this.toastr.success("customer loaded Successfully");
@@ -130,12 +121,12 @@ export class LoginDailogComponent implements OnInit {
                         // itemsCount: cart,
 
                       };
-                      // this._cookie.put('customerCartCount', JSON.stringify(cartData));
+                      this.cookiesService.set('customerCartCount', JSON.stringify(cartData));
                       this.cartService.setCartItemCount(cartData.itemsCount);
                       this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
 
                       // this.toastr.success("customer cart loaded Successfully");
-                      this.router.navigate(['']);
+                      this.addtoCart.showDialog()
                     },
                     error => {
                       this.loading="";
@@ -165,139 +156,6 @@ export class LoginDailogComponent implements OnInit {
   onReset(): void {
     this.submitted = false;
     this.logInForm.reset();
-  }
-  navigateToSignUp(){
-    this.router.navigateByUrl('/new-user');
-  }
-
-
-  showDialog(){
-    this.addToCartShow=!this.addToCartShow;
-    // setTimeout(()=>{
-    //   if(this.color && this.color.value){
-    //     this.getMediaImage(this.product,this.color,this.product.colors)
-    //
-    //   }
-    //   if(this.size && this.size.value){
-    //     this.selectSize(this.product,this.size,this.product.sizes)
-    //
-    //   }
-    // }, 3000);
-
-  }
-  validateThenAddToCart(){
-  //   let response = this.cartService.validateCart(this.product, this.color, this.size,this.addToCartFrom.controls.qty.value);
-  //
-  //   if (response && response.error) {
-  //     this.error = response.error;
-  //     return;
-  //   }
-  //   this.addToCart();
-  }
-
-  // addToCart() {
-  //
-  //   this.validateProduct=true;
-  //
-  //   let productSku = this.product.sku;
-  //
-  //   if (this.size) {
-  //     productSku = productSku + "-" + this.size.label;
-  //   }
-  //
-  //   if (this.color) {
-  //     productSku = productSku + "-" + this.color.label;
-  //   }
-  //   this.cartService.quoteId().subscribe(
-  //     quoteId => {
-  //       let cartItem = {
-  //         "cart_item": {
-  //           "quote_id": quoteId,
-  //           "sku": productSku,
-  //           "qty": this.addToCartFrom.controls.qty.value
-  //         }
-  //       };
-  //       return this.cartService.addCartItem(cartItem).subscribe(
-  //         cartItem => {
-  //           this.messageService.add({severity:'success', summary:'Cart', detail:'"Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty'});
-  //
-  //           // this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
-  //           let getCartItemCount = this.cartService.getCartItemCount();
-  //           let setCartItemCount = !getCartItemCount||getCartItemCount===null? 1: getCartItemCount + 1;
-  //           this.cartService.setCartItemCount(setCartItemCount);
-  //           let cartData = {
-  //             itemsCount: setCartItemCount
-  //           };
-  //           // this._cookie.put('customerCartCount', JSON.stringify(cartData));
-  //           this.validateProduct=false;
-  //           this.addToCartShow=false;
-  //           return {cartItem: cartItem};
-  //         },
-  //         error => {
-  //           return {error: "Please select qty."};
-  //         });
-  //     },
-  //     error => {
-  //       return {error: "Please select qty."};
-  //     });
-  //   // this.toastr.success("done");
-  //   this.messageService.add({severity:'success', summary:'done'});
-  //
-  // }
-  getColor(color: any) {
-  //   if (color) {
-  //     return color;
-  //   } else {
-  //     return "";
-  //   }
-  }
-
-  getMediaImage(product: any, color: any, productsColors: any) {
-  //   this.mediaImage = "LoadingImage";
-  //   let sku = product.sku;
-  //   let skuProducts = _.findWhere(this.allProducts, {'sku': sku});
-  //   if (color.value) {
-  //     this.color = color;
-  //     let item = _.findWhere(skuProducts.items, {'color': this.color.value});
-  //     if (item) {
-  //       product.image = item.image;
-  //     }
-  //     _.each(productsColors, (color: any) => {
-  //       if (color.value === this.color.value) {
-  //         // @ts-ignore
-  //         document.getElementById("colorBoxAddToCart_" + color.value + product.sku).className = "selected-color";
-  //       } else {
-  //         // @ts-ignore
-  //         document.getElementById("colorBoxAddToCart_" + color.value + product.sku).className = "unselected-color";
-  //       }
-  //
-  //     });
-  //     this.mediaImage = "";
-  //   }
-  }
-
-  selectSize(product: any, size: any, productsSizes: any) {
-  //   if (!product) {
-  //     return;
-  //
-  //   }
-  //   if (!size) {
-  //     return;
-  //   }
-  //   if (size.value) {
-  //     this.size = size;
-  //
-  //     _.each(productsSizes, (size: any) => {
-  //       if (size.value === this.size.value) {
-  //         // @ts-ignore
-  //         document.getElementById("sizeBoxAddToCart_" + size.value + product.sku).className = "selected-size";
-  //       } else {
-  //         // @ts-ignore
-  //         document.getElementById("sizeBoxAddToCart_" + size.value + product.sku).className = "unselected-size";
-  //       }
-  //
-  //     });
-  //   }
   }
 
 }

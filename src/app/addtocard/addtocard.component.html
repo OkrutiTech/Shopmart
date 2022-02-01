@@ -1,5 +1,4 @@
-<div class="ui-rtl" dir="rtl">
-  <p-button icon="pi pi-shopping-cart" label="Add to cart" (click)="showDialog()"></p-button>
+ <p-button icon="pi pi-shopping-cart" label="Add to cart" (click)="showDialog()"></p-button>
   <p-dialog [(visible)]="addToCartShow" [style]="{width: '50vw'}" [baseZIndex]="10000"
             header="Item add to cart">
     <div class="p-grid">
@@ -70,4 +69,7 @@
   </p-dialog>
 
 <!--  to create Loginpop up dialog -->
-</div>
+ <p-dialog [(visible)]="loginShowPopup" [style]="{width: '50vw'}" [baseZIndex]="10000"
+           header="Login here">
+  <app-login-dailog></app-login-dailog>
+</p-dialog>

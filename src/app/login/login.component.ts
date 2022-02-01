@@ -10,7 +10,7 @@ import {
 import {LoginService} from "./login.service";
 import {CartService} from "../cart/cart.service";
 import {MessageService} from "primeng/api";
-import * as _ from 'underscore';
+import {UserMessageService} from "../user-message.service";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   logInForm: FormGroup;
   submitted = false;
   loading:string;
-  constructor(private router: Router,private formBuilder:FormBuilder,private logInService:LoginService,private cartService:CartService,private cookiesService:CookieService,private messageService:MessageService) { }
+  constructor(private router: Router,private formBuilder:FormBuilder,private logInService:LoginService,private cartService:CartService,private cookiesService:CookieService,private messageService:MessageService,private userMessageService:UserMessageService) { }
 
 
   ngOnInit(): void {
@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(): void {
     this.submitted = true;
-    // let signUp={""}
     if (this.logInForm.invalid) {
       return;
     }
@@ -79,7 +78,7 @@ export class LoginComponent implements OnInit {
           this.logInService.getCustomerDetail(tokenData)
             .subscribe(
               customer => {
-                // this.cookiesService.put('customerDetail', JSON.stringify(customer));
+                this.cookiesService.set('customerDetail', JSON.stringify(customer));
                 // this.messageService.add({severity:'success', summary:'Customer', detail:'Customer details loaded Successfully'});
 
                 // this.toastr.success("customer loaded Successfully");
@@ -97,12 +96,14 @@ export class LoginComponent implements OnInit {
                       this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
 
                       // this.toastr.success("customer cart loaded Successfully");
+                      this.sendMessage(true);
                       this.router.navigate(['']);
                     },
                     error => {
                       this.loading="";
                       this.router.navigate(['login']);
                       // this.toastr.error(error.message);
+                      this.messageService.add({severity:'error',summary:'Cart',detail:'Customer Cart loaded faiiled'})
 
                     }
                   );
@@ -130,5 +131,9 @@ export class LoginComponent implements OnInit {
   }
   navigateToSignUp(){
     this.router.navigateByUrl('/new-user');
+  }
+
+  sendMessage(data:boolean){
+    this.userMessageService.sendUserMessage(data)
   }
 }

@@ -1,12 +1,11 @@
-<div class="ui-rtl" dir="rtl">
-  <p-button icon="pi pi-shopping-cart" label="Add to cart" (click)="showDialog()"></p-button>
-  <p-dialog [(visible)]="addToCartShow" [style]="{width: '50vw'}" [baseZIndex]="10000"
-            header="Login Here">
+<!-- <p-button icon="pi pi-shopping-cart" label="Add to cart" (click)="showDialog()"></p-button>-->
+<!--  <p-dialog [(visible)]="addToCartShow" [style]="{width: '50vw'}" [baseZIndex]="10000"-->
+<!--            header="Login Here">-->
     <div class="p-grid">
 
 <!--      here login content start-->
       <div>
-        <div class="register"><h1>Account</h1></div>
+<!--        <div class="register"><h1>Account</h1></div>-->
         <div class="p-grid">
           <div class="p-col-7">
             <form [formGroup]="logInForm">
@@ -63,14 +62,14 @@
               </div>
             </form>
           </div>
-          <div class="p-col-4">
-            <img src="../../assets/images/cart.webp" alt="cart" style="width:400px;height:350px;">
-          </div>
+<!--          <div class="p-col-4">-->
+<!--            <img src="../../assets/images/cart.webp" alt="cart" style="width:400px;height:350px;">-->
+<!--          </div>-->
         </div>
-        <div class="p-grid">
-          <div class="p-col-8"></div>
-          <div class="p-col-3"><button pButton type="button" (click)="navigateToSignUp()" class="p-inputtext buttoncolor createbotton p-button" >Create an Account</button></div>
-        </div>
+<!--        <div class="p-grid">-->
+<!--          <div class="p-col-8"></div>-->
+<!--          <div class="p-col-3"><button pButton type="button" (click)="navigateToSignUp()" class="p-inputtext buttoncolor createbotton p-button" >Create an Account</button></div>-->
+<!--        </div>-->
         <p-toast position="top-left"></p-toast>
       </div>
 
@@ -81,13 +80,12 @@
 
 
     </div>
-    <ng-template pTemplate="footer">
-      <button pButton type="button" icon="pi pi-shopping-cart" class="p-button-success" label="Confirm" (click)="validateThenAddToCart()"></button>
+<!--    <ng-template pTemplate="footer">-->
+<!--      <button pButton type="button" icon="pi pi-shopping-cart" class="p-button-success" label="Confirm" (click)="validateThenAddToCart()"></button>-->
 
-      <button pButton type="button" class="p-button-danger" label="Cancel" (click)="addToCartShow=false"></button>
-    </ng-template>
+<!--      <button pButton type="button" class="p-button-danger" label="Cancel" (click)="addToCartShow=false"></button>-->
+<!--    </ng-template>-->
 
-  </p-dialog>
+<!--  </p-dialog>-->
 
   <!--  to create Loginpop up dialog -->
-</div>

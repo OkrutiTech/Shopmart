@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {HomeService} from '../home/home.service';
 import {Router} from '@angular/router'
 import {CookieService} from "ngx-cookie-service";
 
 import {ProductListComponent} from '../product-list/product-list.component'
+import {UserMessageService} from "../user-message.service";
 
 
 @Component({
@@ -13,25 +14,35 @@ import {ProductListComponent} from '../product-list/product-list.component'
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Input() showUser:any
 username='';
-count='';
+count=0;
 
-  constructor(private homeService: HomeService, private _router: Router, private cookieService: CookieService) {
+  constructor(private homeService: HomeService, private _router: Router, private cookieService: CookieService,private userMessageService:UserMessageService) {
 
   }
 
   items: MenuItem[];
 
   ngOnInit() {
-     let customer = this.cookieService.get('customerDetail');
-let customerDetail=JSON.parse(customer);
-this.username=customerDetail.firstname;
+    this.userMessageService.reciveUserMessage().subscribe(data=>{
+      let token=this.cookieService.get('customerToken')
+      if(token && data){
+        let customer = this.cookieService.get('customerDetail');
+        let customerDetail=JSON.parse(customer);
+        if(customerDetail){
+          this.username=customerDetail.firstname;
+        }
 
-let customerCartCount=this.cookieService.get('customerCartCount');
-let cartCount=JSON.parse(customerCartCount);
-this.count=cartCount.itemsCount;
-console.log(customerCartCount)
-    // console.log(username);
+        let customerCartCount=this.cookieService.get('customerCartCount');
+        let cartCount=JSON.parse(customerCartCount);
+        if(cartCount){
+          this.count=cartCount.itemsCount;
+        }
+      }
+    })
+
+
     this.homeService.getData().subscribe(
       (d: any) => {
         this.items = d.children_data.map((c: any) => {
@@ -61,11 +72,30 @@ console.log(customerCartCount)
     )
 
   }
+
+  ngOnChange():void{
+    this.userMessageService.reciveUserMessage().subscribe(data=>{
+      let token=this.cookieService.get('customerToken')
+      if(token && data) {
+        let customer = this.cookieService.get('customerDetail');
+        let customerDetail = JSON.parse(customer);
+        if (customerDetail) {
+          this.username = customerDetail.firstname;
+        }
+
+        let customerCartCount = this.cookieService.get('customerCartCount');
+        let cartCount = JSON.parse(customerCartCount);
+        if (cartCount) {
+          this.count = cartCount.itemsCount;
+        }
+      }
+    })
+}
   logout()
   {
     this.cookieService.deleteAll();
     this.username="";
-    this.count="";
+    this.count=0;
 
     this._router.navigate(['/login']);
   }
