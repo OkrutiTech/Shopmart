@@ -23,7 +23,7 @@ export class NewUserComponent implements OnInit {
 emailStatus:boolean=false;
 formControlStatus:any;
   createCustomer="";
-  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService,private _router: Router,,private cookieService:CookieService,private messageService:MessageService) {}
+  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService,private _router: Router,private cookieService:CookieService,private messageService:MessageService) {}
 
   ngOnInit(): void {
     this.signUpFrom = this.formBuilder.group(
