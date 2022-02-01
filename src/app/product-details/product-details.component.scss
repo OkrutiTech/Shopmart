@@ -1,0 +1,17 @@
+.selected-size {
+  background:#d2232a;
+  color:white;
+  padding:0 10px;
+}
+.unselected-size {
+  border: none !important ;
+}
+.sizeStyle{
+  height: 22px;
+  width: 25px;
+  display: inline-block;
+  background: lavender;
+}
+::ng-deep .ngxImageZoomContainer > img{
+  max-height: 500px;
+}

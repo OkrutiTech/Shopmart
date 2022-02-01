@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute,Router} from '@angular/router'
+import {ActivatedRoute, Router} from '@angular/router'
 import {ProductService} from './product-service'
 import {HomeService} from '../home/home.service'
 import * as _ from 'underscore';
 import {PrimeNGConfig} from "primeng/api";
-
-
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit{
   path: any = [];
+  mapProduct: any;
+  mainProduct: any = [];
   columns: number[];
   currentCategoryName: string;
   products: any;
@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
   error: string;
   validateProduct: boolean;
 
-  constructor(private route: ActivatedRoute,private router: Router, private productService: ProductService, private homeService: HomeService, private primengConfig: PrimeNGConfig) {
+  constructor(private route: ActivatedRoute, private router: Router, private productService: ProductService, private homeService: HomeService, private primengConfig: PrimeNGConfig) {
   }
 
   ngOnInit(): void {
@@ -45,9 +45,6 @@ export class ProductListComponent implements OnInit {
       this.productService.getProductDataById(this.currentCategoryId).subscribe((products: any) => {
           this.resetProducts();
           if (!products.items) {
-            // this.messageService.add({severity:'success', summary:'Items', detail:'No items found in that category'});
-
-            // this.toastr.success("No items found in that category");
             this.loadProducts = "";
             return;
           }
@@ -170,7 +167,9 @@ export class ProductListComponent implements OnInit {
                   });
                   if (mainProduct) {
                     this.categoryProducts.push(mainProduct);
+                    this.productService.setCategoryProducts(this.categoryProducts);
                   }
+
 
                 });
                 this.allProducts = Object.assign([], this.products);
@@ -220,35 +219,15 @@ export class ProductListComponent implements OnInit {
                           }
                         }
                       });
-                      // this.messageService.add({severity:'success', summary:'Filters', detail:'Filter loaded successfully'});
 
-                      // this.toastr.success("Filter loaded successfully");
-                      // this.toastr.success("Category products loaded successfully");
-                      // this.messageService.add({severity:'success', summary:'Products', detail:'Category products loaded successfully'});
                       this.loadProducts = "";
-                      // let previousUrl = this._cookie.get('previousUrl');
-                      // if (previousUrl.indexOf("product-sku") !== -1) {
-                      //   let sku = previousUrl.split("product-sku/")[1];
-                      //   let product = _.findWhere(this.categoryProducts, {'sku': sku});
-                      //   if (product) {
-                      //     this.populateDetailProduct(product);
-                      //   }
-                      // }
 
-                      console.log(this.categoryProducts);
-                      for (let i of this.categoryProducts) {
-                        console.log(i.image)
-                      }
-                      // console.log(this.filters);
-                      // console.log(this.path);
                     },
                     (error: any) => {
 
                     }
                   );
                 }
-
-
               },
               (error: any) => {
                 this.products = [];
@@ -257,7 +236,6 @@ export class ProductListComponent implements OnInit {
                 // this.toastr.error(error.message);
               }
             );
-          //this._router.navigate(['Home']);
 
         },
         (error: any) => {
@@ -287,10 +265,11 @@ export class ProductListComponent implements OnInit {
   }
 
   populateDetailProduct(product: any) {
-    let skuProducts = _.findWhere(this.allProducts, {'sku': product.sku});
 
-    let currentProduct = {skuProducts: skuProducts, product: product, filters: this.filters};
-    this.productService.setCurrentProductData(currentProduct);
+    // let skuProducts = _.findWhere(this.allProducts, {'sku': product.sku});
+    //
+    // let currentProduct = {skuProducts: skuProducts, product: product, filters: this.filters};
+    // this.productService.setCurrentProductData(currentProduct);
     this.router.navigate([`category-id/${this.currentCategoryId}/product-sku/${product.sku}`]);
 
   }

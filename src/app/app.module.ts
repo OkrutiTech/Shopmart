@@ -24,7 +24,6 @@ import { RippleModule } from "primeng/ripple";
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
-import {CookieService} from "ngx-cookie-service";
 import {BadgeModule} from 'primeng/badge';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {CookiesService} from "./shared/cookie.service";
@@ -34,6 +33,10 @@ import {ProductDetailsService} from "./product-details/product-details.service";
 import {TabMenuModule} from 'primeng/tabmenu';
 import {MenuItemContent} from "primeng/menu";
 import {TabViewModule} from 'primeng/tabview';
+import {NgxImageZoomModule} from 'ngx-image-zoom'
+import {CookieService} from "ngx-cookie-service";
+import {RatingModule} from 'primeng/rating';
+
 
 
 @NgModule({
@@ -72,7 +75,10 @@ import {TabViewModule} from 'primeng/tabview';
     CarouselModule,
     ProgressSpinnerModule,
     TabMenuModule,
-    TabViewModule
+    TabViewModule,
+    NgxImageZoomModule,
+    RatingModule
+
 
 
   ],
