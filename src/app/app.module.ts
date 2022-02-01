@@ -24,6 +24,13 @@ import { RippleModule } from "primeng/ripple";
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { AddtocardComponent } from './addtocard/addtocard.component';
+import { MessagesModule } from 'primeng/messages';
+import {DialogModule} from 'primeng/dialog';
+import { LoginDailogComponent } from './login-dailog/login-dailog.component';
 import {BadgeModule} from 'primeng/badge';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {CookiesService} from "./shared/cookie.service";
@@ -36,9 +43,6 @@ import {TabViewModule} from 'primeng/tabview';
 import {NgxImageZoomModule} from 'ngx-image-zoom'
 import {CookieService} from "ngx-cookie-service";
 import {RatingModule} from 'primeng/rating';
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +52,9 @@ import {RatingModule} from 'primeng/rating';
     LoginComponent,
     NewUserComponent,
     ProductListComponent,
-    ProductDetailsComponent,
+    AddtocardComponent,
+    LoginDailogComponent,
+ProductDetailsComponent,
   ],
   imports: [
     MessagesModule,
@@ -71,16 +77,18 @@ import {RatingModule} from 'primeng/rating';
     PanelMenuModule,
     BrowserAnimationsModule,
     CardModule,
-    BadgeModule,
+    MessageModule,
+    ToastModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+    DialogModule,
+BadgeModule,
     CarouselModule,
     ProgressSpinnerModule,
     TabMenuModule,
     TabViewModule,
     NgxImageZoomModule,
     RatingModule
-
-
-
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

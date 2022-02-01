@@ -4,13 +4,19 @@ import {ProductService} from './product-service'
 import {HomeService} from '../home/home.service'
 import * as _ from 'underscore';
 import {PrimeNGConfig} from "primeng/api";
+import {MessageService} from "primeng/api";
+import {AddtocardComponent} from "../addtocard/addtocard.component";
+
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
+  providers:[MessageService]
 
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
+  // @Output() parentComponet:EventEmitter<any>=new EventEmitter<any>()
   path: any = [];
   mapProduct: any;
   mainProduct: any = [];
@@ -31,20 +37,27 @@ export class ProductListComponent implements OnInit{
   selectedColor: any;
   selectedSize: any;
   error: string;
+  currentProduct:string;
+  currentData:string;
+
+
+
   validateProduct: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private productService: ProductService, private homeService: HomeService, private primengConfig: PrimeNGConfig) {
+  constructor(private route: ActivatedRoute, private productService: ProductService, private homeService: HomeService, private primengConfig: PrimeNGConfig,private router: Router,private messageService:MessageService) {
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-
     this.categories = this.homeService.getValue();
     this.route.params.subscribe((params: any) => {
       this.currentCategoryId = params['id'];
       this.productService.getProductDataById(this.currentCategoryId).subscribe((products: any) => {
           this.resetProducts();
           if (!products.items) {
+            // this.messageService.add({severity:'success', summary:'Items', detail:'No items found in that category'});
+
+            // this.toastr.success("No items found in that category");
             this.loadProducts = "";
             return;
           }
@@ -219,12 +232,13 @@ export class ProductListComponent implements OnInit{
                           }
                         }
                       });
+                      // this.messageService.add({severity:'success', summary:'Filters', detail:'Filter loaded successfully'});
 
                       this.loadProducts = "";
 
                     },
                     (error: any) => {
-
+                      this.messageService.add({severity:'error', summary:'Filters', detail:'Filter loaded Failed'});
                     }
                   );
                 }
@@ -234,6 +248,7 @@ export class ProductListComponent implements OnInit{
                 this.filters = [];
                 this.loadProducts = "";
                 // this.toastr.error(error.message);
+                this.messageService.add({severity:'error', summary:'Filters', detail:'CategoryProducts loaded Failed'});
               }
             );
 
@@ -241,11 +256,14 @@ export class ProductListComponent implements OnInit{
         (error: any) => {
           this.products = [];
           this.loadProducts = "";
+          this.messageService.add({severity:'error', summary:'Filters', detail:'Product not Available'
+              });
           // this.toastr.error(error.message);
         });
     });
 
   }
+
 
   resetFilters() {
     this.currentFillterCode = "";
@@ -323,6 +341,8 @@ export class ProductListComponent implements OnInit{
     let skuProducts = _.findWhere(this.allProducts, {'sku': sku});
     if (color.value) {
       this.selectedColor = color;
+
+      // console.log(this.selectedColor,sku)
       let item = _.findWhere(skuProducts.items, {'color': this.selectedColor.value});
       if (item) {
         product.image = item.image;
@@ -343,14 +363,17 @@ export class ProductListComponent implements OnInit{
   selectSize(product: any, size: any, productsSizes: any) {
     if (!product) {
       return;
+
     }
     if (!size) {
       return;
     }
     let sku = product.sku;
+    this.currentProduct=sku
     let skuProducts = _.findWhere(this.allProducts, {'sku': sku});
     if (size.value) {
       this.selectedSize = size;
+
       _.each(productsSizes, (size: any) => {
         if (size.value === this.selectedSize.value) {
           // @ts-ignore
@@ -363,5 +386,4 @@ export class ProductListComponent implements OnInit{
       });
     }
   }
-
 }

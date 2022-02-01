@@ -9,11 +9,13 @@ import {
   Validators
 } from '@angular/forms';
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
-  styleUrls: ['./new-user.component.scss']
+  styleUrls: ['./new-user.component.scss'],
+  providers:[MessageService]
 })
 export class NewUserComponent implements OnInit {
   signUpFrom: FormGroup;
@@ -21,7 +23,7 @@ export class NewUserComponent implements OnInit {
 emailStatus:boolean=false;
 formControlStatus:any;
   createCustomer="";
-  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService,private _router: Router,private cookieService:CookieService) {}
+  constructor(private formBuilder: FormBuilder,private newUserService:NewUserService,private _router: Router,,private cookieService:CookieService,private messageService:MessageService) {}
 
   ngOnInit(): void {
     this.signUpFrom = this.formBuilder.group(
@@ -112,32 +114,36 @@ formControlStatus:any;
                  let tokenData=this.cookieService.get('customerToken');
                   tokenData="Bearer " + token;
                   this.createCustomer="Creating customer cart";
-                  // this.messageService.add({severity:'success', summary:'Customer', detail:'Create customer Successfully'});
+                  this.messageService.add({severity:'success', summary:'Customer', detail:'Create customer Successfully'});
 
                   // this.toastr.success("Create customer Successfully");
                   this.newUserService.customerCartCreate(tokenData)
                     .subscribe(
                       cart => {
                         //console.log(cart);
-                        // this.messageService.add({severity:'success', summary:'Customer', detail:'Customer cart created Successfully"'});
+                        this.messageService.add({severity:'success', summary:'Customer', detail:'Customer cart created Successfully"'});
 
                         // this.toastr.success("customer cart created Successfully");
 
                         this._router.navigate(['']);
                       },
-                      // error => {
+                      error => {
                       //   this.toastr.error(error.message);
-                      // }
+                        // this.toastr.error(error.message);
+                        this.messageService.add({severity:'error', summary:'Customer', detail:'Customer cart not Created"'});
+                      }
                     );
                 },
-                // error => {
+                error => {
                 //   this.toastr.error(error.message);
-                // }
+                  this.messageService.add({severity:'error', summary:'Customer', detail:'Customer cart not Created"'});
+                }
               );
           },
-          // error => {
+          error => {
           //   this.toastr.error(error.message);
-          // }
+            this.messageService.add({severity:'error', summary:'Customer', detail:'Customer cart not Created"'});
+          }
         );
 
     }

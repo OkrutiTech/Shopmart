@@ -1,9 +1,9 @@
+<p-toast position="bottom-right"></p-toast>
 <div *ngIf="!loadProducts">
   <p-breadcrumb [model]="path"></p-breadcrumb>
-
 </div>
 <div *ngIf="loadProducts">
-  Loading Products
+  <p-progressSpinner [style]="{width: '50px', height: '50px',margin:'15% auto',display:'block'}" styleClass="custom-spinner" strokeWidth="2" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
 </div>
 <div class="p-col-12 p-d-inline-flex">
   <div class="p-col-1">
@@ -14,6 +14,7 @@
     margin-left: 10px;"></button>
   </div>
 </div>
+
 <div class="p-grid" *ngIf="!loadProducts">
   <div class="p-col-3">
     <p-panelMenu [model]="filters" [style]="{'width':'300px'}" (click)="populateFilterName($event)">
@@ -54,12 +55,16 @@
                    <span id="sizeBox_{{size.value+product.sku}}" class="sizeStyle">{{size.label}}</span>
                        </span>
             </span>
-            <!--            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>-->
+            <span>
+<!--            <p-button icon="pi pi-shopping-cart" label="Add to Cart" styleClass="p-button-primary" [style]="{'margin-left': '.5em'}">-->
+<!--            </p-button>-->
+              <app-addtocard [product]="product" [size]="this.selectedSize" [color]="this.selectedColor" [allProducts]="allProducts"></app-addtocard>
+              </span>
           </ng-template>
 
-        </p-card>
-      </div>
-    </div>
+                    </p-card>
+                  </div>
+                </div>
 
-  </div>
-</div>
+              </div>
+            </div>

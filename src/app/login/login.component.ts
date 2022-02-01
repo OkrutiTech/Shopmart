@@ -9,18 +9,20 @@ import {
 }from '@angular/forms';
 import {LoginService} from "./login.service";
 import {CartService} from "../cart/cart.service";
+import {MessageService} from "primeng/api";
 import * as _ from 'underscore';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers:[MessageService]
 })
 export class LoginComponent implements OnInit {
   logInForm: FormGroup;
   submitted = false;
   loading:string;
-  constructor(private router: Router,private formBuilder:FormBuilder,private logInService:LoginService,private cartService:CartService,private cookiesService:CookieService) { }
+  constructor(private router: Router,private formBuilder:FormBuilder,private logInService:LoginService,private cartService:CartService,private cookiesService:CookieService,private messageService:MessageService) { }
 
 
   ngOnInit(): void {
@@ -69,7 +71,7 @@ export class LoginComponent implements OnInit {
         token => {
           this.cookiesService.set('customerToken', "Bearer " + token);
           tokenData="Bearer " + token;
-            this.cookiesService.get('customerToken');
+            // this.cookiesService.get('customerToken');
           // this.messageService.add({severity:'success', summary:'Login', detail:'Login customer Successfully'});
 
           // this.toastr.success("Login customer Successfully");
@@ -77,7 +79,7 @@ export class LoginComponent implements OnInit {
           this.logInService.getCustomerDetail(tokenData)
             .subscribe(
               customer => {
-                this.cookiesService.set('customerDetail', JSON.stringify(customer));
+                // this.cookiesService.put('customerDetail', JSON.stringify(customer));
                 // this.messageService.add({severity:'success', summary:'Customer', detail:'Customer details loaded Successfully'});
 
                 // this.toastr.success("customer loaded Successfully");
@@ -92,7 +94,7 @@ export class LoginComponent implements OnInit {
                       };
                       this.cookiesService.set('customerCartCount', JSON.stringify(cartData));
                       this.cartService.setCartItemCount(cartData.itemsCount);
-                      // this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
+                      this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
 
                       // this.toastr.success("customer cart loaded Successfully");
                       this.router.navigate(['']);
@@ -101,6 +103,7 @@ export class LoginComponent implements OnInit {
                       this.loading="";
                       this.router.navigate(['login']);
                       // this.toastr.error(error.message);
+
                     }
                   );
               },
@@ -108,6 +111,7 @@ export class LoginComponent implements OnInit {
                 this.loading="";
                 this.router.navigate(['login']);
                 // this.toastr.error(error.message);
+                this.messageService.add({severity:'error', summary:'Cart', detail:'Customer cart loaded Failed'});
               }
             );
         },
@@ -115,6 +119,7 @@ export class LoginComponent implements OnInit {
           this.loading="";
           this.router.navigate(['login']);
           // this.toastr.error(error.message);
+          this.messageService.add({severity:'info', summary:'Login', detail:'Check Email && Password'});
         }
       );
   }
