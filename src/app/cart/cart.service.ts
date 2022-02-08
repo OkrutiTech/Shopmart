@@ -14,6 +14,9 @@ export class CartService{
       .set('authorization', tokenData);
     let url='/cart-backend/rest/V1/carts/mine';
     return this.http.get(url,{headers:headers})
+      .toPromise()
+      .then(res => {return res})
+
   }
   setCartItemCount(count) {
     return this.cartItemCount = count;
@@ -75,7 +78,7 @@ export class CartService{
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('authorization', tokenData);
-    let url='/cart-backend/rest/V1/carts/mine/items'
+    let url='/cart-backend/rest/V1/carts/mine/items/'
     return this.http.delete(url+itemId, {headers:headers})
       // .map((response: Response) => response.json())
       // .catch(this.handleError);

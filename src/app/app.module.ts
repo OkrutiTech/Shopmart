@@ -30,17 +30,21 @@ import {DialogModule} from 'primeng/dialog';
 import { LoginDailogComponent } from './login-dailog/login-dailog.component';
 import {BadgeModule} from 'primeng/badge';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {CookiesService} from "./shared/cookie.service";
 import {ProductDetailsComponent} from './product-details/product-details.component';
 import {CarouselModule} from 'primeng/carousel';
-import {ProductDetailsService} from "./product-details/product-details.service";
 import {TabMenuModule} from 'primeng/tabmenu';
-import {MenuItemContent} from "primeng/menu";
 import {TabViewModule} from 'primeng/tabview';
 import {NgxImageZoomModule} from 'ngx-image-zoom'
 import {CookieService} from "ngx-cookie-service";
 import {RatingModule} from 'primeng/rating';
 import { BuyProductComponent } from './buy-product/buy-product.component';
+import { ProfileComponent } from './profile/profile.component';
+import {MessageService} from "primeng/api";
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {TableModule} from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +58,7 @@ import { BuyProductComponent } from './buy-product/buy-product.component';
     LoginDailogComponent,
 ProductDetailsComponent,
 BuyProductComponent,
+ProfileComponent,
   ],
   imports: [
     MessagesModule,
@@ -81,15 +86,19 @@ BuyProductComponent,
     ProgressSpinnerModule,
     MessagesModule,
     DialogModule,
-BadgeModule,
+    BadgeModule,
     CarouselModule,
     ProgressSpinnerModule,
     TabMenuModule,
     TabViewModule,
     NgxImageZoomModule,
-    RatingModule
+    RatingModule,
+    VirtualScrollerModule,
+    ConfirmDialogModule,
+    TableModule,
+    CheckboxModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,MessageService,ConfirmationService],
   bootstrap: [AppComponent],
 
 })

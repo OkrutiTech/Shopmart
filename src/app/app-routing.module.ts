@@ -5,6 +5,7 @@ import {LoginComponent} from "./login/login.component";
 import {NewUserComponent} from "./new-user/new-user.component";
 import { ProductListComponent } from './product-list/product-list.component';
 import {ProductDetailsComponent} from "./product-details/product-details.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path:'category/:id/products',
     component:ProductListComponent,
   },
-  {path:'category-id/:id/product-sku/:sku',component:ProductDetailsComponent}
+  {path:'category-id/:id/product-sku/:sku',component:ProductDetailsComponent},
+  {path:'profile',component:ProfileComponent}
 
 ];
 

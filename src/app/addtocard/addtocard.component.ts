@@ -125,26 +125,28 @@ export class AddtocardComponent implements OnInit {
         };
         return this.cartService.addCartItem(cartItem,this.customerToken).subscribe(
           cartItem => {
-            this.messageService.add({severity:'success', summary:'Cart', detail:'"Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty'});
-
-            // this.toastr.success("Item  " + cartItem.name + "  is successfully added in your shopping cart with quantity of " + cartItem.qty);
+            this.messageService.add({severity:'success', summary:'Cart', detail:"Item successfully added in your shopping cart"});
             let getCartItemCount = this.cartService.getCartItemCount();
             let setCartItemCount = !getCartItemCount||getCartItemCount===null? 1: getCartItemCount + 1;
             this.cartService.setCartItemCount(setCartItemCount);
             let cartData = {
               itemsCount: setCartItemCount
             };
+            console.log(cartData)
             this.cookiesService.set('customerCartCount', JSON.stringify(cartData));
+            if(cartData){
+              this.sendMessage(true)
+            }
             this.validateProduct=false;
             this.addToCartShow=false;
             return {cartItem: cartItem};
           },
           error => {
-            return {error: "Please select qty."};
+            this.messageService.add({severity:'error',summary:'Cart',detail:'Please select color'})
           });
       },
       error => {
-        return {error: "Please select qty."};
+        this.messageService.add({severity:'error',summary:'Cart',detail:'Please select quantity'})
       });
     // this.toastr.success("done");
     this.messageService.add({severity:'success', summary:'done'});

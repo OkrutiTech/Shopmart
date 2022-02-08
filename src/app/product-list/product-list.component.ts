@@ -55,9 +55,8 @@ export class ProductListComponent implements OnInit {
       this.productService.getProductDataById(this.currentCategoryId).subscribe((products: any) => {
           this.resetProducts();
           if (!products.items) {
-            // this.messageService.add({severity:'success', summary:'Items', detail:'No items found in that category'});
+            this.messageService.add({severity:'success', summary:'Items', detail:'No items found in that category'});
 
-            // this.toastr.success("No items found in that category");
             this.loadProducts = "";
             return;
           }

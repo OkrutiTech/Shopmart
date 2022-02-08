@@ -10,14 +10,14 @@
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  left:92%;
+  //left:92%;
   right: 0;
   bottom: 0;
   z-index: 9999;
   padding: 40px 5px;
   padding-top: 70px;
   margin-bottom: 70px;
-  background: #0D1326;
+  //background: #0D1326;
   border-top-left-radius: 9px;
   border-bottom-left-radius: 9px;
 }
@@ -41,6 +41,7 @@
 .back {
   //background: #3B5998;
   color: white;
+
 }
 
 .login {
@@ -57,12 +58,13 @@
 .header-text{
   color: white;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1rem;
   text-decoration: none;
   margin: 0 10px;
 }
 .sidebarIcon{
   font-size: 1rem;
   cursor:pointer;
+  background: #0D1326;
 }
 
