@@ -1,29 +1,33 @@
 import {Injectable} from "@angular/core";
 import {HttpClient , HttpHeaders} from "@angular/common/http";
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService{
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,private cookieService:CookieService) {
   }
   private cartItemCount;
-  getCustomerCartDetail(tokenData) {
+  private paymentData;
+  getCustomerCartDetail() {
+    let tokenData=this.cookieService.get('customerToken')
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('authorization', tokenData);
     let url='/cart-backend/rest/V1/carts/mine';
     return this.http.get(url,{headers:headers})
-      .toPromise()
-      .then(res => {return res})
+      // .toPromise()
+      // .then(res => {return res})
 
   }
-  setCartItemCount(count) {
-    return this.cartItemCount = count;
-  }
-  getCartItemCount() {
-    return this.cartItemCount ;
-  }
+  // setCartItemCount(count) {
+  //   return this.cartItemCount = count;
+  // }
+  // getCartItemCount() {
+  //   return this.cartItemCount ;
+  // }
+
   quoteId(tokenData) {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
@@ -83,5 +87,57 @@ export class CartService{
       // .map((response: Response) => response.json())
       // .catch(this.handleError);
   }
+
+  shippingInformation(shippingData) {
+
+    let tokenData=this.cookieService.get("customerToken");
+    const headers= new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('authorization', tokenData)
+    let shippingInformation='/cart-backend/rest/V1/carts/mine/shipping-information';
+    return this.http.post(shippingInformation,shippingData,{headers:headers})
+      // .map((response: Response) => response.json())
+      // .catch(this.handleError);
+  }
+
+  orderPlaced(data) {
+    let tokenData=this.cookieService.get("customerToken");
+    const headers= new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('authorization', tokenData)
+    let orderPlacedurl='/cart-backend/rest/V1/carts/mine/payment-information'
+    return this.http.post(orderPlacedurl,data,{headers:headers})
+      // .map((response: Response) =>response.json())
+      // .catch(this.handleError);
+  }
+  paymentMethod(data) {
+    let tokenData=this.cookieService.get("customerToken");
+    const headers= new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('authorization', tokenData)
+    let payTmurl='/cart-backend/PaytmKit/pgRedirect.php'
+    return this.http.post(payTmurl,data,{headers:headers})
+      // .map((response: Response) =>response.text())
+      // .catch(this.handleError);
+  }
+
+  setCartItemCount(count) {
+    return this.cartItemCount = count;
+  }
+  getCartItemCount() {
+    return this.cartItemCount ;
+  }
+
+  setPaymentHtml(html) {
+    return this.paymentData = html;
+  }
+  getPaymentHtml() {
+    return this.paymentData ;
+  }
+
+  // private handleError(error: Response) {
+  //   //console.error(error);
+  //   return Observable.throw(error.json());
+  // }
 
 }

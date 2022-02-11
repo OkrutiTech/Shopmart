@@ -113,8 +113,7 @@ export class LoginDailogComponent implements OnInit {
 
                 // this.toastr.success("customer loaded Successfully");
                 this.loading="Loading customer cart";
-                this.cartService.getCustomerCartDetail(tokenData)
-                  .then((cart:any)=>{
+                this.cartService.getCustomerCartDetail().subscribe((cart:any)=>{
                     let cartData = {
                       itemsCount: cart.items_count
                       // itemsCount: cart,

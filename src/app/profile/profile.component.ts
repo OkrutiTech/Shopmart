@@ -8,6 +8,7 @@ import { PrimeNGConfig } from "primeng/api";
 import {ProductDetailsService} from "../product-details/product-details.service";
 import { ConfirmationService } from 'primeng/api';
 import {UserMessageService} from "../user-message.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit {
   product:any
   products:any
   totalRs:number=0
-  totalQty:number=0
+  totalQty:[]
   selectedProducts:any;
 
   constructor(
@@ -47,7 +48,8 @@ export class ProfileComponent implements OnInit {
     private primeNGConfig: PrimeNGConfig,
     private productDetailService:ProductDetailsService,
     private confirmationService: ConfirmationService,
-    private userMessageService:UserMessageService
+    private userMessageService:UserMessageService,
+    private router:Router
   ) {
     this.customerToken=this.cookiesService.get('customerToken')
   }
@@ -59,8 +61,7 @@ export class ProfileComponent implements OnInit {
 
    getMyCartInformation() {
     let $this = this
-    this.cartService.getCustomerCartDetail(this.customerToken)
-      .then((cart:any) => {
+    this.cartService.getCustomerCartDetail().subscribe((cart:any) => {
         console.log("cart",cart)
           let cartData = {
             itemsCount: cart.items_count
@@ -96,9 +97,6 @@ export class ProfileComponent implements OnInit {
         }
 
         this.totalQty=cart.items_qty
-          console.log("d",this.product)
-          console.log("qty",this.totalQty)
-          console.log("Rs",this.totalRs)
         },
         error => {
           this.messageService.add({severity:'error',summary:'Profile',detail:'Cart item not loaded'})
@@ -132,14 +130,13 @@ export class ProfileComponent implements OnInit {
           if(cartData){
             this.sendMessage(true)
           }
-          this.totalQty=0;
+          this.totalQty;
           this.totalRs=0
           for(let r of $this.product){
             this.totalRs=this.totalRs+r.subTotal;
             this.totalQty=this.totalQty+r.qty
           }
 
-          // $this.toastr.success(" Successfully removed Item from cart ");
           this.messageService.add({severity:'success', summary:'Remove Item ', detail:'Item removed successfully from cart'});
         },
         error => {
@@ -152,7 +149,9 @@ export class ProfileComponent implements OnInit {
   sendMessage(data:boolean){
     this.userMessageService.sendUserMessage(data)
   }
-  orderPlace(data:any):void{
-
+  orderPlace():void{
+     if(this.totalQty && this.totalRs){
+       this.router.navigate(['payment-option'])
+     }
   }
 }

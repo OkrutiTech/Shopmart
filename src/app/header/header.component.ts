@@ -31,7 +31,7 @@ count=0;
         let customer = this.cookieService.get('customerDetail');
         let customerDetail=JSON.parse(customer);
         if(customerDetail){
-          this.username=customerDetail.firstname;
+          this.username=customerDetail.firstname +" "+ customerDetail.lastname;
         }
 
         let customerCartCount=this.cookieService.get('customerCartCount');

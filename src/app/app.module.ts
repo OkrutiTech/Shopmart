@@ -45,6 +45,13 @@ import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {TableModule} from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
+// import { CheckoutComponent } from './checkout/checkout.component';
+import { StepsModule } from 'primeng/steps';
+// import { PersonalComponent } from './personal/personal.component';
+// import { PaymentComponent } from './payment/payment.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PaymentOptionComponent } from './payment-option/payment-option.component';
+import { PaymentStatusComponent } from './payment-status/payment-status.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +66,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 ProductDetailsComponent,
 BuyProductComponent,
 ProfileComponent,
+// CheckoutComponent,
+// PersonalComponent,
+// PaymentComponent,
+DashboardComponent,
+PaymentOptionComponent,
+PaymentStatusComponent,
   ],
   imports: [
     MessagesModule,
@@ -96,7 +109,9 @@ ProfileComponent,
     VirtualScrollerModule,
     ConfirmDialogModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    StepsModule,
+
   ],
   providers: [CookieService,MessageService,ConfirmationService],
   bootstrap: [AppComponent],

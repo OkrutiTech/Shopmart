@@ -1,0 +1,333 @@
+<p-tabView>
+
+  <p-tabPanel header="User Information">
+                      <div class="wrapper" style="padding-top: 10px; margin:0 auto;" *ngIf="accountInformation.updatingAccount">
+                        <p-progressSpinner></p-progressSpinner>
+                        <span>Account Updating</span>
+                      </div>
+                      <div [hidden]="accountInformation.updatingAccount">
+                        <b style="margin-bottom: 10px;font-size: large">Account Information</b><br />
+                        <div class="form-group p-m-3">
+                        <i class="material-icons" style="color: #6bd098; margin-right: 25px;" >firstName</i>
+                          <input
+                            class="form-control p-inputtext textfield p-component"
+                            type="text" placeholder="firstName"
+                            [(ngModel)]=" accountInformation.firstName"
+                            disabled="{{accountInformation.disabled}}"
+                          >
+
+                        <i class="material-icons" style="color: #6bd098; margin-right: 25px;" >lastName</i>
+                          <input
+                            class="form-control p-inputtext textfield p-component"
+                            type="text" placeholder="lastName"
+                            [(ngModel)]="accountInformation.lastName"
+                            disabled={{accountInformation.disabled}}>
+
+                        <i class="material-icons" style="color: #6bd098; margin-right: 25px;" >email</i>
+                          <input
+                            class="form-control p-inputtext textfield p-component"
+                            type="email" placeholder="email"
+                            [(ngModel)]="accountInformation.email"
+                            disabled={{accountInformation.disabled}}>
+                      </div>
+                        <button pButton type="button" style="margin:0px 10px" (click)="editAccountInformation('accountInformation')">
+                          {{accountInformation.disabled ? 'Edit Account' : "Update Account"}}
+                        </button>
+                  </div>
+  </p-tabPanel>
+
+
+  <p-tabPanel header="Change Password">
+                      <div class="wrapper" style="padding-top: 10px;padding-bottom:10px;margin:0 auto;" *ngIf="changePassword.updatingPassword">
+                        <p-progressSpinner></p-progressSpinner>
+                        <span>Password Updating</span>
+                      </div>
+                      <div [hidden]="changePassword.updatingPassword" >
+                        <b style="margin-bottom: 10px;font-size: large">Change Password</b><br />
+                          <input
+                            style="margin:0px 10px"
+                            class="form-control p-inputtext textfield p-component"
+                            type="password" placeholder="oldPassword"
+                            [(ngModel)]="changePassword.currentPassword"
+                            disabled="{{changePassword.disabled}}">
+
+                          <input
+                            style="margin:0px 10px"
+                            class="form-control p-inputtext textfield p-component"
+                            type="password" placeholder="newPassword"
+                            [(ngModel)]="changePassword.newPassword"
+                            disabled={{changePassword.disabled}}>
+
+                          <input
+                            style="margin:0px 10px"
+                            class="form-control p-inputtext textfield p-component"
+                            type="password" placeholder="confirmPassword"
+                            [(ngModel)]="changePassword.confirmNewPassword"
+                            disabled={{changePassword.disabled}}>
+                      </div>
+    <button pButton type="button" style="margin:10px" (click)="updatePassword()">
+      {{"Update Password"}}
+    </button>
+  </p-tabPanel>
+
+
+  <p-tabPanel header="My Address Book">
+    <div class="wrapper" style="padding-top: 10px; margin:0 auto;" *ngIf="addressBook.updatingAddressBook">
+      <p-progressSpinner></p-progressSpinner>
+      <span>Address Updating</span>
+    </div>
+    <b style="margin-bottom: 10px;font-size: large"  [hidden]="addressBook.updatingAddressBook">Address Book</b><br />
+    <div [hidden]="addressBook.updatingAddressBook" style="margin:0px 10px" >
+      <div class="p-grid">
+        <div class="p-col-12 p-m-2" >
+
+        <span class="p-col-4">
+            <span class="p-col-6">
+              <i class="material-icons" style="color: orange; margin-right: 25px;">firstName</i>
+            </span>
+          <span class="p-col-6">
+          <input
+            class="form-control p-inputtext textfield p-component"
+            type="text" placeholder="firstName"
+            [(ngModel)]=" addressBook.firstName"
+            disabled="{{addressBook.disabled}}">
+          </span>
+        </span>
+
+          <span class="p-col-4">
+
+            <span class="p-col-6">
+              <i class="material-icons" style="color: orange; margin-right: 48px;">lastName</i>
+            </span>
+
+            <span class="p-col-6">
+              <input
+                class="form-control p-inputtext textfield p-component"
+                type="text" placeholder="lastName"
+                [(ngModel)]="addressBook.lastName"
+                disabled={{addressBook.disabled}}>
+          </span>
+            </span>
+
+          <span class="p-col-4">
+
+            <span class="p-col-6">
+              <i class="material-icons" style="color: orange; margin-right: 25px;">contact_phone</i>
+            </span>
+
+         <span class="p-col-6">
+              <input
+                class="form-control p-inputtext textfield p-component"
+                type="number" placeholder="phoneNo"
+                [(ngModel)]="addressBook.telephone"
+                disabled={{addressBook.disabled}}>
+         </span>
+          </span>
+        </div>
+      </div>
+
+        <div class="p-grid">
+          <div class="p-col-12 p-m-2" style="border-right:2px solid orangered">
+        <span class="p-col-4">
+
+          <span class="p-col-6">
+            <i class="material-icons" style="color: orange; margin-right: 32px;">postcode</i>
+          </span>
+
+          <span class="p-col-6">
+          <input
+            class="form-control p-inputtext textfield p-component"
+            type="number" placeholder="zip/postal code"
+            [(ngModel)]="addressBook.postcode"
+            disabled={{addressBook.disabled}}>
+          </span>
+        </span>
+
+            <span class="p-col-4">
+
+              <span class="p-col-6">
+                <i class="material-icons" style="color: orange; margin-right: 37px;">location_on</i>
+              </span>
+
+              <span class="p-col-6">
+                <input
+                  class="form-control p-inputtext textfield p-component"
+                  type="text" placeholder="street address line 1"
+                  [(ngModel)]=" addressBook.addressLine1"
+                  disabled="{{addressBook.disabled}}">
+              </span>
+            </span>
+
+            <span class="p-col-4">
+              <span class="p-col-6">
+                <i class="material-icons" style="color: orange; margin-right: 45px;">location_on</i>
+              </span>
+              <span class="p-col-6">
+                <input class="form-control p-inputtext textfield p-component"
+                       type="text" placeholder="street address line 2"
+                       [(ngModel)]="addressBook.addressLine2"
+                       disabled={{addressBook.disabled}}>
+              </span>
+            </span>
+
+          </div>
+        </div>
+
+      <div class="p-grid">
+
+        <div class="p-col-12 p-m-2" style="border-right:2px solid orangered">
+
+        <span class="p-col-4">
+
+          <span class="p-col-6"><i class="material-icons" style="color:orange; margin-right: 7px;">location_city</i>
+          </span>
+
+          <span class="p-col-6">
+            <input class="form-control p-inputtext textfield p-component"
+                   type="text" placeholder="city"
+                   [(ngModel)]="addressBook.city"
+                   disabled={{addressBook.disabled}}>
+          </span>
+        </span>
+
+          <span class="p-col-4">
+
+            <span class="p-col-6">
+              <i class="material-icons" style="color:orange; margin-right: 2px;">account_balance</i>
+            </span>
+
+            <span class="p-col-6">
+              <input
+                class="form-control p-inputtext textfield p-component" type="text" placeholder="state/province"
+                [(ngModel)]="addressBook.region"
+                disabled={{addressBook.disabled}}>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      </div>
+
+<!--    </div>-->
+<!--                      <button type="button" style="margin-top:10px" class="btn btn-warning btn-round" [hidden]="addressBook.updatingAddressBook"  (click)="updateAddress()">{{addressBook.disabled ? 'Edit Address Book' : "Update Address Book"}}</button>-->
+    <button pButton type="button"style="margin-top:10px" [hidden]="addressBook.updatingAddressBook" (click)="updateAddress()">
+      {{addressBook.disabled ? 'Edit Address Book' : "Update Address Book"}}
+    </button>
+
+<!--                    </ng-template>-->
+<!--                  </ngb-tab>-->
+  </p-tabPanel>
+
+  <p-tabPanel header="My Cart">
+    <app-profile></app-profile>
+<!--                    <div class="wrapper" *ngIf="cartInformation.cartItems.length===0" [hidden]="cartInformation.loadingCartItem">-->
+<!--&lt;!&ndash;                      <img style="height: 300px;width: 300px"&ndash;&gt;-->
+<!--&lt;!&ndash;                           src='../../assets/img/empty_cart.jpg'/>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                    <div class="wrapper" style="padding-top: 10px; margin:0 auto;"-->
+<!--                         *ngIf="cartInformation.loadingCartItem">-->
+<!--&lt;!&ndash;                      <mat-spinner strokeWidth="3" [diameter]="50" mode='indeterminate'&ndash;&gt;-->
+<!--&lt;!&ndash;                                   style="margin:0 auto;stroke: #673ab7;"></mat-spinner>&ndash;&gt;-->
+<!--                      <span>{{cartInformation.spinnerValue}}</span>-->
+<!--                    </div>-->
+<!--                    <div class="container" [hidden]="cartInformation.loadingCartItem ||cartInformation.cartItems.length===0">-->
+<!--                      <b style="margin-bottom: 10px;font-size: large">My Cart</b><br />-->
+<!--                      <table id="cart" class="table table-hover table-condensed">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                          <th style="width:50%">Product</th>-->
+<!--                          <th style="width:10%">Price</th>-->
+<!--                          <th style="width:8%">Quantity</th>-->
+<!--                          <th style="width:22%" class="text-center">Subtotal</th>-->
+<!--                          <th style="width:10%"></th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody *ngFor="let item of cartInformation.cartItems let i=index">-->
+<!--                        <tr>-->
+<!--                          <td data-th="Product">-->
+<!--                            <div class="row">-->
+<!--&lt;!&ndash;                              <div class="col-sm-2 hidden-xs"><img  style="height: 100px;width: 100px" src="/cart-backend/pub/media/catalog/product{{item.image}}" alt="..." class="img-responsive"/></div>&ndash;&gt;-->
+<!--                              <div class="col-sm-10">-->
+<!--                                <h4 class="nomargin">{{item.name}}</h4>-->
+<!--                                &lt;!&ndash;<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>&ndash;&gt;-->
+<!--                              </div>-->
+<!--                            </div>-->
+<!--                          </td>-->
+<!--                          <td data-th="Price">{{item.price | currency:"&#8377;"}}</td>-->
+<!--                          <td data-th="Quantity">-->
+<!--                            <input style="width:70px;" type="number" min="1"-->
+<!--                                   class="form-control p-inputtext textfield p-component" id="inputSuccess1"-->
+<!--                                   min="1" required placeholder="Qty" [(ngModel)]="item.qty" name="qty" #qty="ngModel" (change)="updateQuantity(item)">-->
+<!--                          </td>-->
+<!--                          <td data-th="Subtotal" class="text-center">{{item.subTotal | currency:"&#8377;"}}</td>-->
+<!--                          <td class="actions" data-th="">-->
+<!--                            <button class="btn btn-danger btn-sm" (click)="removeItem(item)"><i class="fa fa-trash-o"></i></button>-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                        <tfoot>-->
+<!--                        <tr class="visible-xs">-->
+<!--                          <td class="text-center"><strong>Total {{cartInformation.cartSubTotal| currency:"&#8377;"}}</strong></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                          <td><a  routerLink="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>-->
+<!--                          <td colspan="2" class="hidden-xs"></td>-->
+<!--                          <td class="hidden-xs text-center"><strong>Total {{cartInformation.cartSubTotal| currency:"&#8377;"}} </strong></td>-->
+<!--                          <td><a style="color:#FFFFFF" class="btn btn-success btn-block" (click)="loadPaymentOption()">Checkout <i class="fa fa-angle-right"></i></a></td>-->
+<!--                        </tr>-->
+<!--                        </tfoot>-->
+<!--                      </table>-->
+<!--                    </div>-->
+<!--    -->
+  </p-tabPanel>
+
+  <p-tabPanel header="My Orders">
+                      <div class="row following" >
+                      <div class="col-md-6 ml-auto mr-auto">
+                      <ul class="list-unstyled follows">
+                      <li>
+                      <div class="row">
+                      <div class="col-md-2 col-sm-2 ml-auto mr-auto">
+<!--                      <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">-->
+                      </div>
+                      <div class="col-md-7 col-sm-4 ml-auto">
+                      <h6>Flume<br/><small>Musical Producer</small></h6>
+                      </div>
+                      <div class="col-md-3 col-sm-2 ml-auto mr-auto">
+                      <div class="form-check">
+                      <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" value="" checked="">
+                      <span class="form-check-sign"></span>
+                      </label>
+                      </div>
+                      </div>
+                      </div>
+                      </li>
+                      <hr />
+                      <li>
+                      <div class="row">
+                      <div class="col-md-2 col-sm-2 ml-auto mr-auto">
+<!--                      <img src="../assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">-->
+                      </div>
+                      <div class="col-md-7 col-sm-4 ml-auto">
+                      <h6>Banks<br /><small>Singer</small></h6>
+                      </div>
+                      <div class="col-md-3 col-sm-2 ml-auto mr-auto">
+                      <div class="form-check">
+                      <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" value="" checked="">
+                      <span class="form-check-sign"></span>
+                      </label>
+                      </div>
+                      </div>
+                      </div>
+                      </li>
+                      </ul>
+                      </div>
+                      </div>
+
+  </p-tabPanel>
+
+
+</p-tabView>
+<p-toast position="bottom-right"></p-toast>

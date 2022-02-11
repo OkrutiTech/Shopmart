@@ -31,7 +31,14 @@
 <!-- The social media icon bar -->
 <div class="icon-bar">
   <a class="back sidebarIcon" ><i class="pi pi-arrow-left"><br><span>Back</span></i></a>
-  <a class="login sidebarIcon"><i class="pi pi-user" routerLink="login" style="font-size: 1rem"><br><span>Login</span></i></a>
+  <a class="login sidebarIcon">
+    <span *ngIf="username">
+      <i class="pi pi-palette" routerLink="dashboard" style="font-size: 1rem"><br><span>Dashboard</span></i>
+    </span>
+    <span *ngIf="!username">
+      <i class="pi pi-user" routerLink="login" style="font-size: 1rem"><br><span>Login</span></i>
+    </span>
+  </a>
   <a class="cart sidebarIcon" routerLink="profile"><i class="pi pi-shopping-cart" style="font-size: 1rem">
    <span *ngIf="count"><p-badge [value]="count" size="small" class="cartItemCount" severity="success" severity="success"></p-badge></span>
     <br><span>Cart</span></i>
