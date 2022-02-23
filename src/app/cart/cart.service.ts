@@ -115,8 +115,8 @@ export class CartService{
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('authorization', tokenData)
-    let payTmurl='/cart-backend/PaytmKit/pgRedirect.php'
-    return this.http.post(payTmurl,data,{headers:headers})
+    let payTmUrl='/cart-backend/PaytmKit/pgRedirect.php'
+    return this.http.post(payTmUrl,data,{headers:headers})
       // .map((response: Response) =>response.text())
       // .catch(this.handleError);
   }

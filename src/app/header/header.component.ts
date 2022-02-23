@@ -3,7 +3,6 @@ import {MenuItem} from 'primeng/api';
 import {HomeService} from '../home/home.service';
 import {Router} from '@angular/router'
 import {CookieService} from "ngx-cookie-service";
-
 import {ProductListComponent} from '../product-list/product-list.component'
 import {UserMessageService} from "../user-message.service";
 
@@ -17,7 +16,7 @@ export class HeaderComponent implements OnInit {
   @Input() showUser:any
 username='';
 count=0;
-
+  userData:any
   constructor(private homeService: HomeService, private _router: Router, private cookieService: CookieService,private userMessageService:UserMessageService) {
 
   }
@@ -31,7 +30,12 @@ count=0;
         let customer = this.cookieService.get('customerDetail');
         let customerDetail=JSON.parse(customer);
         if(customerDetail){
+          console.log("c",customerDetail)
           this.username=customerDetail.firstname +" "+ customerDetail.lastname;
+          this.userData={
+            name:this.username,
+            email:customerDetail.email
+          }
         }
 
         let customerCartCount=this.cookieService.get('customerCartCount');

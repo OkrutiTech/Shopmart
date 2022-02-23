@@ -1,0 +1,126 @@
+<div class="stepsdemo-content">
+  <p-card>
+    <ng-template pTemplate="title">
+     Shipping Address
+    </ng-template>
+
+    <ng-template pTemplate="subtitle">
+      Enter your personal information
+    </ng-template>
+
+    <ng-template pTemplate="content">
+<div class="p-grid p-m-2">
+      <div class="p-col-6">
+       <div class="p-grid">
+         <div class="p-col-3"> <label for="firstname">Firstname</label></div>
+         <div class="p-col-8">
+           <input #firstname="ngModel" id="firstname" type="text" required pInputText [(ngModel)]="personalInformation.firstname" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}">
+           <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">Firstname is required.</small>
+         </div>
+       </div>
+      </div>
+
+      <div class="p-col-6">
+<div class="p-grid">
+  <div class="p-col-3"><label for="lastname">Lastname</label></div>
+  <div class="p-col-8">
+    <input #lastname="ngModel" id="lastname" type="text" required pInputText [(ngModel)]="personalInformation.lastname" [ngClass]="{'ng-dirty': (lastname.invalid && submitted) || (lastname.dirty && lastname.invalid)}">
+    <small class="p-error" *ngIf="(lastname.invalid && submitted )|| (lastname.dirty && lastname.invalid)">Lastname is required.</small>
+  </div>
+</div>
+      </div>
+</div>
+
+      <div>
+        Address
+      </div>
+
+<div class="p-grid p-m-2">
+  <div class="p-col-6">
+    <div class="p-grid">
+      <div class="p-col-3">
+        <label for="addressLine1">addressLine1</label>
+      </div>
+      <div class="p-col-8">
+        <input #addressLine1="ngModel" id="addressLine1" type="text" required pInputText [(ngModel)]="personalInformation.addressLine1" [ngClass]="{'ng-dirty': (addressLine1.invalid && submitted) || (addressLine1.dirty && addressLine1.invalid)}">
+        <small class="p-error" *ngIf="(addressLine1.invalid && submitted )|| (addressLine1.dirty && addressLine1.invalid)">Address is required.</small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="p-col-6">
+<div class="p-grid">
+  <div class="p-col-3">
+    <label for="addressLine2">addressLine2</label>
+  </div>
+  <div class="p-col-8">
+    <input #addressLine2="ngModel" id="addressLine2" type="text" required pInputText [(ngModel)]="personalInformation.addressLine2" [ngClass]="{'ng-dirty': (addressLine2.invalid && submitted) || (addressLine2.dirty && addressLine2.invalid)}">
+    <small class="p-error" *ngIf="(addressLine2.invalid && submitted )|| (addressLine2.dirty && addressLine2.invalid)">Address is required.</small>
+  </div>
+</div>
+  </div>
+
+</div>
+
+
+      <div class="p-grid p-m-2">
+        <div class="p-col-6">
+          <div class="p-grid">
+            <div class="p-col-3">
+              <label for="city">city</label>
+            </div>
+            <div class="p-col-8">
+              <input #city="ngModel" id="city" type="text" required pInputText [(ngModel)]="personalInformation.city" [ngClass]="{'ng-dirty': (city.invalid && submitted) || (city.dirty && city.invalid)}">
+              <small class="p-error" *ngIf="(city.invalid && submitted )|| (city.dirty && city.invalid)">City is required.</small>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="p-col-6">
+          <div class="p-grid">
+            <div class="p-col-3">
+              <label for="region">region</label>
+            </div>
+            <div class="p-col-8">
+              <input #region="ngModel" id="region" type="text" required pInputText [(ngModel)]="personalInformation.region" [ngClass]="{'ng-dirty': (region.invalid && submitted) || (region.dirty && region.invalid)}">
+              <small class="p-error" *ngIf="(region.invalid && submitted )|| (region.dirty && region.invalid)">Region is required.</small>            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="p-grid p-m-2">
+        <div class="p-col-6">
+          <div class="p-grid">
+            <div class="p-col-3"><label for="postcode">postcode</label></div>
+            <div class="p-col-8">
+              <input #postcode="ngModel" id="postcode" type="text" required pInputText [(ngModel)]="personalInformation.postcode" [ngClass]="{'ng-dirty': (postcode.invalid && submitted) || (postcode.dirty && postcode.invalid)}">
+              <small class="p-error" *ngIf="(postcode.invalid && submitted )|| (postcode.dirty && postcode.invalid)">Postcode is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-col-6">
+          <div class="p-grid">
+            <div class="p-col-3">
+              <label for="telephone">telephone</label>
+            </div>
+            <div class="p-col-8">
+              <input #telephone="ngModel" id="telephone" type="number" required pInputText [(ngModel)]="personalInformation.telephone" [ngClass]="{'ng-dirty': (telephone.invalid && submitted) || (telephone.dirty && telephone.invalid)}">
+              <small class="p-error" *ngIf="(telephone.invalid && submitted )|| (telephone.dirty && telephone.invalid)">Telephone is required.</small>
+            </div>
+          </div>
+
+        </div>
+      </div>
+</ng-template>
+<ng-template pTemplate="footer">
+  <div class="grid grid-nogutter justify-content-end">
+    <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+  </div>
+</ng-template>
+</p-card>
+</div>

@@ -16,7 +16,7 @@ import { NewUserComponent } from './new-user/new-user.component';
 import { MenubarModule } from 'primeng/menubar';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CardModule, } from 'primeng/card';
-import {HttpClientModule} from "@angular/common/http"
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http"
 import { AvatarModule } from "primeng/avatar";
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import { PanelModule } from "primeng/panel";
@@ -45,13 +45,15 @@ import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {TableModule} from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
-// import { CheckoutComponent } from './checkout/checkout.component';
 import { StepsModule } from 'primeng/steps';
-// import { PersonalComponent } from './personal/personal.component';
-// import { PaymentComponent } from './payment/payment.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PaymentOptionComponent } from './payment-option/payment-option.component';
 import { PaymentStatusComponent } from './payment-status/payment-status.component';
+import {InterceptorInterceptor} from "./interceptor.interceptor";
+import { DropdownModule } from 'primeng/dropdown';
+import {CalendarModule} from 'primeng/calendar'
+import { DatePipe } from '@angular/common'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,9 +68,6 @@ import { PaymentStatusComponent } from './payment-status/payment-status.componen
 ProductDetailsComponent,
 BuyProductComponent,
 ProfileComponent,
-// CheckoutComponent,
-// PersonalComponent,
-// PaymentComponent,
 DashboardComponent,
 PaymentOptionComponent,
 PaymentStatusComponent,
@@ -111,9 +110,14 @@ PaymentStatusComponent,
     TableModule,
     CheckboxModule,
     StepsModule,
-
+    DropdownModule,
+    CalendarModule
   ],
-  providers: [CookieService,MessageService,ConfirmationService],
+  providers: [CookieService,MessageService,DatePipe,ConfirmationService,{
+    provide:HTTP_INTERCEPTORS,
+    useClass:InterceptorInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent],
 
 })
