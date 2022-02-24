@@ -1,12 +1,15 @@
-import { Component,OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ProductDetailsService} from "./product-details.service";
 import {ProductService} from "../product-list/product-service";
 import {ActivatedRoute, Router} from '@angular/router'
 import {CookieService} from "ngx-cookie-service";
 import {CartService} from "../cart/cart.service";
 import {HomeService} from "../home/home.service";
-import {MenuItem} from 'primeng/api';
+import {ConfirmationService, MenuItem} from 'primeng/api';
+import {Message} from 'primeng/api';
+import {MessageService} from "primeng/api";
 import * as _ from 'underscore';
+import {AddtocardComponent} from "../addtocard/addtocard.component";
 
 @Component({
   selector: 'app-product-details',
@@ -22,9 +25,9 @@ export class ProductDetailsComponent implements OnInit {
   categoryProduct:any;
   products: any;
   categoryProducts: any = [];
-  product: { filter: '' };
+  // product: { filter: '' };
   currentFillterCode: '';
-  allProducts: any;
+  // allProducts: any;
   filters: any = [];
   val: number = 4;
   id:any;
@@ -45,31 +48,20 @@ export class ProductDetailsComponent implements OnInit {
   error:string;
   items:MenuItem[];
   num='0';
-  constructor(private productDetailService:ProductDetailsService,private productService:ProductService,private router:Router ,private cookieService:CookieService,private cartService:CartService , private activateRouter:ActivatedRoute,private homeService:HomeService) { }
+  @Input() product:any
+  @Input() allProducts:any
+  constructor(private productDetailService:ProductDetailsService,private productService:ProductService,private router:Router ,private cookieService:CookieService,private cartService:CartService , private activateRouter:ActivatedRoute,private homeService:HomeService,private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.loadPath="Loading Product Detail"
+    this.urlSkuValue = this.activateRouter.snapshot.paramMap.get('sku');
     this.currentCategoryProducts=this.productService.getCategoryProducts();
     this.id = this.activateRouter.snapshot.paramMap.get('id');
-    if (!this.currentCategoryProducts){
-
-      this.categoryProduct= this.productDetailService.mapProducts(this.id);
-       this.categoryProduct.then(data=>{
-         this.currentCategoryProducts=data;
-       })
-
-      console.log('details data',this.currentCategoryProducts);
-    }
-    this.urlSkuValue = this.activateRouter.snapshot.paramMap.get('sku');
-
     this.currentProducts=_.find(this.currentCategoryProducts,(product:any)=>{
       return product.sku===this.urlSkuValue;
     });
     this.currentProduct=this.currentProducts;
-
     this.categories = this.homeService.getValue();
-     // this.currentProducts = this.productService.getCurrentProductData();
-
     let categoryId = '';
     if (this.categories.length === 0 && !this.currentProducts) {
       this.activateRouter.params.subscribe(routeParams => {
@@ -79,8 +71,40 @@ export class ProductDetailsComponent implements OnInit {
         this.router.navigateByUrl(`category-id/${categoryId}/products`);
         return;
       });
-
     }
+    this.product=this.currentProduct;
+    this.productService.getProductDataById(this.id).subscribe((products: any) => {
+      this.resetProducts();
+      if (!products.items) {
+        this.messageService.add({severity: 'success', summary: 'Items', detail: 'No items found in that category'});
+        return;
+      }
+      _.each(products.items, function (item: any) {
+        _.each(item.custom_attributes, function (attr: any) {
+          let attribute: any = {};
+          attribute[attr.attribute_code] = attr.value;
+          _.extend(item, attribute);
+        });
+        delete item.custom_attributes;
+      });
+      products = _.chain(products.items)
+        .map(function (item: any) {
+          item.keyToGroup = item.sku.split("-")[0];
+          let data = _.findWhere(products.items, {sku: item.keyToGroup});
+          if (data) {
+            return item;
+          } else {
+            item.keyToGroup = item.sku;
+            return item;
+          }
+        })
+        .groupBy('keyToGroup')
+        .map((value: any, key: any) => {
+          return {sku: key, items: value};
+        })
+        .value();
+      this.allProducts = Object.assign([], products);
+      console.log('please detail give the right answer',this.allProducts)
 
 
     if (this.currentProduct) {
@@ -135,8 +159,6 @@ export class ProductDetailsComponent implements OnInit {
               });
               this.path.push({label:this.currentProduct.name})
               this.loadingBradecrumb=true;
-              // this.loadProducts = "";
-              // console.log(this.filters);
               console.log(this.path);
             },
             (error: any) => {
@@ -146,12 +168,13 @@ export class ProductDetailsComponent implements OnInit {
         }
         this.currentSkuProducts = this.currentProducts.skuProducts;
         this.currentFilters = this.currentProducts.filters;
-        this.getMediaGallery("");
+        this.getMediaGallery(this.selectedColor);
         this.getMoreInformation();
       });
     }
-
+    });
   }
+
 
   getColor(color) {
     if (color) {
@@ -175,25 +198,17 @@ export class ProductDetailsComponent implements OnInit {
     });
 
   }
-  resetProducts() {
-
-    this.products = [];
-    this.categoryProducts = [];
-    this.product = {filter: ''};
-    this.currentFillterCode = '';
-    this.currentFillterValue = {label: "", value: ""};
-    this.allProducts = [];
-    this.filters = [];
-  }
   getMediaGallery(color) {
     let sku = this.currentProduct.sku;
+    let skuProducts = _.findWhere(this.allProducts, {'sku': sku});
     if (color) {
       this.setColor(color);
-      let item = _.findWhere(this.currentSkuProducts.items, {'color': color.value});
+      let item = _.findWhere(skuProducts.items, {'color': color.value});
       if (item) {
         sku = item.sku;
       }
     }
+
     this.images = [];
     this.productDetailService.getProductMediaGallery(sku)
       .subscribe(
@@ -266,6 +281,14 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
+    resetProducts() {
+      this.products = [];
+      this.categoryProducts = [];
+      this.currentFillterCode = '';
+      this.currentFillterValue = {label: "", value: ""};
+      this.allProducts = [];
+      this.filters = [];
+    }
 
   changeImage(imageIndex){
     this.num=imageIndex;
