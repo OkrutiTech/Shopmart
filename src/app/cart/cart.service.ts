@@ -105,8 +105,8 @@ export class CartService{
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('authorization', tokenData)
-    let orderPlacedurl='/cart-backend/rest/V1/carts/mine/payment-information'
-    return this.http.post(orderPlacedurl,data,{headers:headers})
+    let orderPlacedUrl='/cart-backend/rest/V1/carts/mine/payment-information'
+    return this.http.post(orderPlacedUrl,data,{headers:headers})
       // .map((response: Response) =>response.json())
       // .catch(this.handleError);
   }

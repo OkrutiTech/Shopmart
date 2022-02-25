@@ -53,6 +53,8 @@ import {InterceptorInterceptor} from "./interceptor.interceptor";
 import { DropdownModule } from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar'
 import { DatePipe } from '@angular/common'
+import {RadioButtonModule} from 'primeng/radiobutton';
+
 
 @NgModule({
   declarations: [
@@ -111,7 +113,8 @@ PaymentStatusComponent,
     CheckboxModule,
     StepsModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    RadioButtonModule
   ],
   providers: [CookieService,MessageService,DatePipe,ConfirmationService,{
     provide:HTTP_INTERCEPTORS,

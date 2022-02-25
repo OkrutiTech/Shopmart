@@ -214,8 +214,6 @@
       {{addressBook.disabled ? 'Edit Address Book' : "Update Address Book"}}
     </button>
 
-<!--                    </ng-template>-->
-<!--                  </ngb-tab>-->
   </p-tabPanel>
 
   <p-tabPanel header="My Cart">
@@ -282,50 +280,10 @@
   </p-tabPanel>
 
   <p-tabPanel header="My Orders">
-                      <div class="row following" >
-                      <div class="col-md-6 ml-auto mr-auto">
-                      <ul class="list-unstyled follows">
-                      <li>
-                      <div class="row">
-                      <div class="col-md-2 col-sm-2 ml-auto mr-auto">
-<!--                      <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">-->
-                      </div>
-                      <div class="col-md-7 col-sm-4 ml-auto">
-                      <h6>Flume<br/><small>Musical Producer</small></h6>
-                      </div>
-                      <div class="col-md-3 col-sm-2 ml-auto mr-auto">
-                      <div class="form-check">
-                      <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" value="" checked="">
-                      <span class="form-check-sign"></span>
-                      </label>
-                      </div>
-                      </div>
-                      </div>
-                      </li>
-                      <hr />
-                      <li>
-                      <div class="row">
-                      <div class="col-md-2 col-sm-2 ml-auto mr-auto">
-<!--                      <img src="../assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">-->
-                      </div>
-                      <div class="col-md-7 col-sm-4 ml-auto">
-                      <h6>Banks<br /><small>Singer</small></h6>
-                      </div>
-                      <div class="col-md-3 col-sm-2 ml-auto mr-auto">
-                      <div class="form-check">
-                      <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" value="" checked="">
-                      <span class="form-check-sign"></span>
-                      </label>
-                      </div>
-                      </div>
-                      </div>
-                      </li>
-                      </ul>
-                      </div>
-                      </div>
-
+    <div class="wrapper" style="padding-top: 10px;padding-bottom:10px;margin:0 auto;" *ngIf="changePassword.updatingPassword">
+      <p-progressSpinner></p-progressSpinner>
+      <span>Order Details</span>
+    </div>
   </p-tabPanel>
 
 

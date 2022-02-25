@@ -25,6 +25,7 @@ import {UserMessageService} from "../user-message.service";
 
 export class DashboardComponent implements OnInit {
   selectedTab: string;
+
   accountInformation:AccountInformation= {
     email:'',
     firstName:'',
@@ -80,6 +81,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let cartDetails=JSON.parse(this.cookieService.get('transactionOrderDetails'))
+    // let cartDetails=JSON.parse(this.cookieService.get('transactionOrderDetails'))
+    console.log('tr',cartDetails)
+
     this._activeRoute.params.subscribe(
       // params => {
       //   let selectedTab = params['selectedTab'];
@@ -314,49 +319,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getMyCartInformation() {
-  //   let $this = this;
-  //   $this.cartService.getCustomerCartDetail()
-  //     .subscribe(
-  //       (cart:any) => {
-  //         let cartData = {
-  //           itemsCount: cart.items_count
-  //         };
-  //         $this.cookieService.set('customerCartCount', JSON.stringify(cartData));
-  //         $this.cartService.setCartItemCount(cartData.itemsCount);
-  //         if (cart.items_count === 0) {
-  //           $this.cartInformation.loadingCartItem = false;
-  //           $this.cartInformation.spinnerValue = "";
-  //           return;
-  //         }
-  //         _.each(cart.items, function (item) {
-  //           item.subTotal=item.qty*item.price;
-  //           $this.cartInformation.cartSubTotal=$this.cartInformation.cartSubTotal+item.subTotal;
-  //           $this.productDetailService.getProductMediaGallery(item.sku)
-  //             .subscribe(
-  //               (images:any) => {
-  //                 _.each(images.media_gallery_entries, function (media) {
-  //                   if (media.types && media.types.length > 0) {
-  //                     item.image = media.file;
-  //                   }
-  //                 });
-  //                 $this.cartInformation.cartItems.push(item);
-  //                 if (cart.items.length === $this.cartInformation.cartItems.length) {
-  //                   $this.cartInformation.loadingCartItem = false;
-  //                   $this.cartInformation.spinnerValue="";
-  //                 }
-  //               },
-  //               error => {
-  //
-  //               }
-  //             );
-  //
-  //         });
-  //
-  //       },
-  //       error => {
-  //         // this.toastr.error(error.message);
-  //       }
-  //     );
+
   }
   //
   updateQuantity(item) {

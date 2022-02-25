@@ -78,12 +78,14 @@ export class LoginComponent implements OnInit {
           this.logInService.getCustomerDetail(tokenData)
             .subscribe(
               customer => {
+                console.log("customer",customer)
                 this.cookiesService.set('customerDetail', JSON.stringify(customer));
                 // this.messageService.add({severity:'success', summary:'Customer', detail:'Customer details loaded Successfully'});
 
                 // this.toastr.success("customer loaded Successfully");
                 this.loading="Loading customer cart";
                 this.cartService.getCustomerCartDetail().subscribe((cart:any)=>{
+                  console.log("cart",cart)
                     let cartData = {
                             itemsCount: cart.items_count
                             // itemsCount: cart,
@@ -97,29 +99,6 @@ export class LoginComponent implements OnInit {
                           this.sendMessage(true);
                           this.router.navigate(['']);
                   })
-                  // .subscribe(
-                  //   (cart:any) => {
-                  //     let cartData = {
-                  //       itemsCount: cart.items_count
-                  //       // itemsCount: cart,
-                  //
-                  //     };
-                  //     this.cookiesService.set('customerCartCount', JSON.stringify(cartData));
-                  //     this.cartService.setCartItemCount(cartData.itemsCount);
-                  //     this.messageService.add({severity:'success', summary:'Cart', detail:'Customer cart loaded Successfully'});
-                  //
-                  //     // this.toastr.success("customer cart loaded Successfully");
-                  //     this.sendMessage(true);
-                  //     this.router.navigate(['']);
-                  //   },
-                  //   error => {
-                  //     this.loading="";
-                  //     this.router.navigate(['login']);
-                  //     // this.toastr.error(error.message);
-                  //     this.messageService.add({severity:'error',summary:'Cart',detail:'Customer Cart loaded faiiled'})
-                  //
-                  //   }
-                  // );
               },
               error => {
                 this.loading="";

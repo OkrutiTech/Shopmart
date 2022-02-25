@@ -60,3 +60,11 @@ td, th {
 //tr:nth-child(even) {
 //  background-color: #dddddd;
 //}
+.setWhy{
+  color: #007185;
+}
+.setWhy:hover{
+  text-decoration: underline;
+  color: #aa8326;
+  cursor: pointer;
+}

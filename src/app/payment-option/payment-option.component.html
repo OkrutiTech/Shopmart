@@ -54,7 +54,7 @@
           <span *ngIf="addressData.country_id==='IN'">INDIA</span>
         </p>
         <p-footer>
-          <button pButton type="button" label="Deliver to this address" style="background: #f0c14b;border-color: #cba957 #bf942a #aa8326;margin:10px 25px;width:80%;height:25px" (click)="loadPaymentOption()"></button>
+          <button pButton type="button" label="Deliver to this address" style="background: #f0c14b;border-color: #cba957 #bf942a #aa8326;margin:10px 25px;width:80%;height:25px" (click)="paymentMethod()"></button>
 <!--          <div class="p-grid p-ml-3">-->
 <!--            <span class="p-col-4"><button pButton type="button" label="Edit" style="background: #d8dde6;color:black;height: 20px"></button></span>-->
 <!--            <span class="p-col-4"><button pButton type="button" label="Delete"style="background: #d8dde6;color: black;height: 20px;" ></button></span>-->
@@ -68,7 +68,10 @@
       <div class="p-grid p-mx-6 p-mt-4">
         <h3>Select a payment method</h3>
       </div>
-      <table *ngIf="showPayment" styleClass="p-datatable-striped p-mx-6 p-mt-4" style="background: white;">
+      <div class="p-grid" style="background: white" *ngIf="showPayment">
+        <div class="p-col-12">
+          <div class="p-grid" >
+      <table  styleClass="p-datatable-striped p-mx-6 p-mt-4" style="background: white;">
         <tr>
           <th></th>
           <th>Name on Card</th>
@@ -87,8 +90,11 @@
             <b>{{cartDataInfo.dateConvert}}</b>
           </td>
         </tr>
-
-          <span>
+        <div class="p-field-radiobutton p-my-4 p-mx-2">
+          <p-radioButton name="selectCard" value="selectCard" [(ngModel)]="selectCard" inputId="selectCard" (click)="cardButton('selectCard')"></p-radioButton>
+          <label>Add Debit/Credit/ATM Card</label>
+        </div>
+          <span *ngIf="selectCard">
             <p-button (click)="showBasicDialog()"  label="Add new Card"></p-button>
             <p-dialog header="Add a credit or debit card" [(visible)]="displayBasic" [style]="{width: '55vw'}" [baseZIndex]="10000">
 
@@ -167,14 +173,145 @@
     </ng-template>
 </p-dialog>
           </span>
-<!--        <tr>-->
-<!--        <td>UPI Option</td>-->
-<!--      </tr>-->
-<!--        <tr>-->
-<!--        <td>Pay On delivery</td>-->
-<!--      </tr>-->
       </table>
+      </div>
+        </div>
+
+        <div class="p-col-12">
+          <div class="p-grid" >
+            <div class="p-col-12">
+              <div class="p-field-radiobutton">
+                <p-radioButton name="netBanking" value="netBanking" [(ngModel)]="netBanking" inputId="netBanking" (click)="netBankingButton('netBanking')"></p-radioButton>
+                <label>Net Banking</label>
+              </div>
+            </div>
+            <div class="p-grid p-mx-4 p-my-2" *ngIf="netBanking">
+              <p-dropdown [options]="banks" [(ngModel)]="selectedBank" placeholder="Select a Bank" optionLabel="name"
+                          [showClear]="true">
+              </p-dropdown>
+            </div>
+          </div>
+          <span class="p-mx-3" *ngIf="netBanking">
+            <i class="pi pi-info-circle p-px-2"></i>
+            For faster payment and instant refund, please use UPI <span (click)="recomandedPaymentDialog()" class="setWhy">Why?</span>
+          <p-dialog header="Recommended Payment Method " [(visible)]="recomandedPayMethod" [style]="{width: '60vw'}" [baseZIndex]="10000" position="right" >
+        Payment method is recommended based on current payment performance of all your payment options.
+</p-dialog>
+          </span>
+        </div>
+
+        <div class="p-col-12">
+      <div class="p-grid" >
+        <div class="p-col-12">
+          <span>
+           <div class="p-field-radiobutton">
+	<p-radioButton name="selectUpiPaymentMethod" value="selectUpiPaymentMethod" [(ngModel)]="selectUpiPaymentMethod" inputId="selectUpiPaymentMethod" (click)="upiPaymentButton('selectUpiPaymentMethod')"></p-radioButton>
+	<label>Others UPI Apps</label>
+</div>
+          </span>
+        </div>
+        <div class="p-grid p-mx-4 p-my-2" *ngIf="selectUpiPaymentMethod">
+         <form [formGroup]="signUpFrom">
+              <div><label class="textfield label">Please enter your UPI ID</label></div>
+                <span><input
+                  size="20"
+                  type="text"
+                  formControlName="payTmUpi"
+                  class="form-control p-inputtext textfield p-component"
+                  placeholder="Ex:MobileNumber@upi"
+                /></span>
+           <span class="p-px-3"><p-button label="verify" (click)="payTm()"></p-button></span>
+          </form>
+        </div>
+      </div>
+        </div>
+        <div class="p-col-12">
+      <div class="p-grid" >
+        <div class="p-field-radiobutton p-mx-2 p-my-3">
+          <p-radioButton name="payOnDeliery" value="payOnDeliery" [(ngModel)]="payOnDeliery" inputId="payOnDeliery" (click)="payOnDeliveryButton('payOnDeliery')"></p-radioButton>
+      	<label> Pay On delivery</label>
+        </div>
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
+
+<!--  <p-button (click)="showBasicDialog()"  label="Add new Card"></p-button>-->
+<!--  <p-dialog header="Add a credit or debit card" [(visible)]="displayBasic" [style]="{width: '55vw'}" [baseZIndex]="10000">-->
+
+<!--    <div class="p-grid" >-->
+
+<!--      <div class="p-col-7">-->
+<!--        <form [formGroup]="signUpFrom">-->
+<!--          <div class="form-group">-->
+<!--            <div class="p-grid p-my-2">-->
+<!--              <div class="p-col-5"><label class="textfield label">Card Name</label></div>-->
+<!--              <div class="p-col-7">-->
+<!--                <input-->
+<!--                  size="20"-->
+<!--                  type="text"-->
+<!--                  formControlName="cardName"-->
+<!--                  class="form-control p-inputtext textfield p-component"-->
+<!--                />-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="form-group">-->
+<!--            <div class="p-grid p-my-2">-->
+<!--              <div class="p-col-5"><label class="textfield label">Card Number</label></div>-->
+<!--              <div class="p-col-7">-->
+<!--                <input-->
+<!--                  size="60"-->
+<!--                  type="number"-->
+<!--                  formControlName="cardNumber"-->
+<!--                  class="form-control p-inputtext textfield p-component"-->
+<!--                />-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="form-group">-->
+<!--            <div class="p-grid">-->
+<!--              <div class="p-col-5"><label class="textfield label">Name on card</label>-->
+<!--              </div>-->
+<!--              <div class="p-col-7">-->
+<!--                <input-->
+<!--                  size="20"-->
+<!--                  id="name"-->
+<!--                  type="text"-->
+<!--                  formControlName="name"-->
+<!--                  class="form-control p-inputtext textfield p-component"-->
+<!--                  pInputText placeholder=""-->
+<!--                />-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="form-group">-->
+<!--            <div class="p-grid">-->
+<!--              <div class="p-col-5"><label class="textfield label">Expiry date</label>-->
+<!--              </div>-->
+<!--              <div class="p-col-7">-->
+<!--              <span>-->
+<!--                <p-calendar formControlName="date" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>-->
+<!--              </span>-->
+
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--      <div class="p-col-5 p-my-2"style="border-left:1px solid #a59e9e;margin-top: 25px!important;overflow: hidden;">-->
+<!--        <span class="p-py-2">Amazon accepts all major credit and debit cards:</span><br>-->
+<!--        <span class="p-py-2">-->
+<!--                  <img src="../../assets/logo/cartImage.png"  />-->
+<!--                </span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <ng-template pTemplate="footer" style="background: #aa8326">-->
+<!--      <p-button (click)="displayBasic=false" label="Cancel"></p-button>-->
+<!--      <p-button (click)="addYourCard()" label="Add your card"></p-button>-->
+<!--    </ng-template>-->
+<!--  </p-dialog>-->

@@ -39,6 +39,7 @@ count=0;
         }
 
         let customerCartCount=this.cookieService.get('customerCartCount');
+        console.log("count",customerCartCount)
         let cartCount=JSON.parse(customerCartCount);
         if(cartCount){
           this.count=cartCount.itemsCount;
