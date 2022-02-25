@@ -8,10 +8,11 @@ import {ProductDetailsComponent} from "./product-details/product-details.compone
 import {ProfileComponent} from "./profile/profile.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {PaymentOptionComponent} from "./payment-option/payment-option.component";
+import {FrontpageComponent} from "./frontpage/frontpage.component";
 
 const routes: Routes = [
   {
-    path:'',component:HomeComponent
+    path:'',component:FrontpageComponent
   },
   {path:'login',component:LoginComponent},
   {path:'new-user',component:NewUserComponent},

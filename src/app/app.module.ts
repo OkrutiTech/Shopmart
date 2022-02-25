@@ -51,9 +51,10 @@ import { PaymentOptionComponent } from './payment-option/payment-option.componen
 import { PaymentStatusComponent } from './payment-status/payment-status.component';
 import {InterceptorInterceptor} from "./interceptor.interceptor";
 import { DropdownModule } from 'primeng/dropdown';
-import {CalendarModule} from 'primeng/calendar'
-import { DatePipe } from '@angular/common'
+import {CalendarModule} from 'primeng/calendar';
+import { DatePipe } from '@angular/common';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import { FrontpageComponent } from './frontpage/frontpage.component'
 
 
 @NgModule({
@@ -73,6 +74,7 @@ ProfileComponent,
 DashboardComponent,
 PaymentOptionComponent,
 PaymentStatusComponent,
+FrontpageComponent,
   ],
   imports: [
     MessagesModule,
